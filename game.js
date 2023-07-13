@@ -1,5 +1,6 @@
-import Intro from './scenes/intro.js';
+import Preload from './scenes/preload.js';
 import MainScreen from './scenes/main_screen.js';
+import InGame from './scenes/ingame.js';
 
 var config = {
     scale: {
@@ -9,7 +10,7 @@ var config = {
     width: 1280,
     height: 720,
     backgroundColor: 0x000000,
-    scene: [Intro, MainScreen],
+    scene: [Preload, MainScreen, InGame],
 }
 
 window.onload = function () {
