@@ -7,10 +7,17 @@ export default class MainScreen extends Phaser.Scene {
     this.background = this.add.image(0, 0, "background");
     this.background.setOrigin(0, 0);
 
-    this.title = this.add.image(640, 260, "title");
-    this.title.setScale(0.5);
+    this.title = this.add.image(640, 230, "title");
+    this.title.setScale(0.25);
 
-    this.playButton = this.add.image(640, 460, "play_button");
+    this.version = this.add
+      .text(1270, 700, "Version 1.1", {
+        font: "20px Trebuchet MS",
+        fill: "#FFFFFF",
+      })
+      .setOrigin(1, 0.5);
+
+    this.playButton = this.add.image(640, 520, "play_button");
     this.playButton.setScale(0.08);
     this.playButton.setInteractive();
     this.playButton.on("pointerdown", () => {
@@ -23,7 +30,7 @@ export default class MainScreen extends Phaser.Scene {
       }, 150);
     });
 
-    this.musicButton = this.add.image(500, 460, "music");
+    this.musicButton = this.add.image(500, 520, "music");
     this.musicButton.setScale(0.08);
     this.musicButton.setInteractive();
     this.musicButton.on("pointerdown", () => {
