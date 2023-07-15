@@ -4,14 +4,14 @@ export default class MainScreen extends Phaser.Scene {
   }
 
   create() {
-    this.background = this.add.image(0, 0, "background");
-    this.background.setOrigin(0, 0);
+    this.background = this.add
+      .image(640, 360, "background")
+      .setOrigin(0.5, 0.5);
 
-    this.title = this.add.image(640, 230, "title");
-    this.title.setScale(0.25);
+    this.title = this.add.image(640, 230, "title").setScale(0.25);
 
     this.version = this.add
-      .text(1270, 700, "Version 1.1", {
+      .text(1270, 700, "Version 1.2", {
         font: "20px Trebuchet MS",
         fill: "#FFFFFF",
       })
@@ -30,6 +30,20 @@ export default class MainScreen extends Phaser.Scene {
           this.scene.start("inGameScene");
         }, 150);
       });
+
+    // this.twoPlayersButton = this.add
+    //   .image(640, 620, "two_players_button")
+    //   .setScale(0.08)
+    //   .setInteractive()
+    //   .on("pointerdown", () => {
+    //     this.twoPlayersButton.setScale(0.085);
+    //     setTimeout(() => {
+    //       this.twoPlayersButton.setScale(0.08);
+    //     }, 100);
+    //     setTimeout(() => {
+    //       this.scene.start("twoPlayersScene");
+    //     }, 150);
+    //   });
 
     this.musicButton = this.add
       .image(500, 520, "music")

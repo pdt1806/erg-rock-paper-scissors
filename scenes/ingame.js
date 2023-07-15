@@ -114,7 +114,10 @@ export default class InGame extends Phaser.Scene {
   }
 
   create() {
-    this.background = this.add.image(0, 0, "background").setOrigin(0, 0);
+    this.background = this.add
+      .image(640, 360, "background_ingame")
+      .setOrigin(0.5, 0.5)
+      .setScale(0.5);
 
     this.menuButton = this.add
       .image(40, 685, "menu_button")
@@ -129,7 +132,10 @@ export default class InGame extends Phaser.Scene {
       });
 
     this.wintext = this.add
-      .text(125, 40, "Wins", { font: "50px Trebuchet MS", fill: "#FFFFFF" })
+      .text(125, 40, "Wins", {
+        font: "50px Trebuchet MS",
+        fill: "#FFFFFF",
+      })
       .setOrigin(0.5, 0.5);
     this.winscore = this.add
       .text(125, 110, `${winCounter}`, {
@@ -139,7 +145,10 @@ export default class InGame extends Phaser.Scene {
       .setOrigin(0.5, 0.5);
 
     this.drawtext = this.add
-      .text(640, 40, "Draws", { font: "50px Trebuchet MS", fill: "#FFFFFF" })
+      .text(640, 40, "Draws", {
+        font: "50px Trebuchet MS",
+        fill: "#FFFFFF",
+      })
       .setOrigin(0.5, 0.5);
     this.drawscore = this.add
       .text(640, 110, `${drawCounter}`, {
@@ -149,7 +158,10 @@ export default class InGame extends Phaser.Scene {
       .setOrigin(0.5, 0.5);
 
     this.losstext = this.add
-      .text(1155, 40, "Losses", { font: "50px Trebuchet MS", fill: "#FFFFFF" })
+      .text(1155, 40, "Losses", {
+        font: "50px Trebuchet MS",
+        fill: "#FFFFFF",
+      })
       .setOrigin(0.5, 0.5);
     this.lossscore = this.add
       .text(1155, 110, `${lossCounter}`, {
@@ -159,10 +171,16 @@ export default class InGame extends Phaser.Scene {
       .setOrigin(0.5, 0.5);
 
     this.aiindicator = this.add
-      .text(1155, 560, "AI", { font: "50px Trebuchet MS", fill: "#FFFFFF" })
+      .text(1155, 560, "AI", {
+        font: "50px Trebuchet MS",
+        fill: "#FFFFFF",
+      })
       .setOrigin(0.5, 0.5);
     this.playerindicator = this.add
-      .text(125, 560, "You", { font: "50px Trebuchet MS", fill: "#FFFFFF" })
+      .text(125, 560, "You", {
+        font: "50px Trebuchet MS",
+        fill: "#FFFFFF",
+      })
       .setOrigin(0.5, 0.5);
 
     this.myhand = this.add
@@ -175,7 +193,7 @@ export default class InGame extends Phaser.Scene {
       .setScale(0.5);
     this.yourhand.angle = yourHandAngle;
 
-    this.handsmenu = this.add.image(640, 720, "hands_menu").setScale(0.2);
+    this.handsmenu = this.add.image(640, 700, "hands_menu").setScale(0.25);
 
     this.rockbutton = this.add
       .image(400, 680, "rock")
@@ -211,7 +229,7 @@ export default class InGame extends Phaser.Scene {
       });
 
     this.resulttext = this.add
-      .text(640, 650, resultText, {
+      .text(640, 660, resultText, {
         font: "50px Trebuchet MS",
         fill: "#FFFFFF",
       })
