@@ -255,7 +255,7 @@ export default class InGame extends Phaser.Scene {
         this.playerindicator.setVisible(true);
         this.aiindicator.setVisible(true);
         menuShowing = !menuShowing;
-      });
+      }, 150);
     });
 
     this.musicbutton = this.add.image(780, 360, "music").setOrigin(0.5, 0.5);
