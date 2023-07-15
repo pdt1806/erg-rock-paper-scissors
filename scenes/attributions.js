@@ -31,7 +31,7 @@ export default class Attributions extends Phaser.Scene {
     this.title = this.add.image(640, 150, "title").setScale(0.15);
 
     this.version = this.add
-      .text(1270, 700, "Version 1.1", {
+      .text(1270, 700, "Version 1.2", {
         font: "20px Trebuchet MS",
         fill: "#FFFFFF",
       })

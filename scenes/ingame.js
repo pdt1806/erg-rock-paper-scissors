@@ -245,7 +245,9 @@ export default class InGame extends Phaser.Scene {
       .image(640, 360, "menu_bg")
       .setOrigin(0.5, 0.5)
       .setScale(0.2)
-      .setVisible(menuShowing);
+      .setVisible(menuShowing)
+      .setInteractive()
+      .on("pointerdown", () => null);
 
     this.homebutton = this.add
       .image(640, 360, "home")
