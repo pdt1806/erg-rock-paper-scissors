@@ -114,19 +114,19 @@ export default class InGame extends Phaser.Scene {
   }
 
   create() {
-    this.background = this.add.image(0, 0, "background");
-    this.background.setOrigin(0, 0);
+    this.background = this.add.image(0, 0, "background").setOrigin(0, 0);
 
-    this.menuButton = this.add.image(40, 685, "menu_button");
-    this.menuButton.setScale(0.08);
-    this.menuButton.setInteractive();
-    this.menuButton.on("pointerdown", () => {
-      this.menuButton.setScale(0.085);
-      setTimeout(() => {
-        this.menuButton.setScale(0.08);
-      }, 100);
-      menuShowing = !menuShowing;
-    });
+    this.menuButton = this.add
+      .image(40, 685, "menu_button")
+      .setScale(0.08)
+      .setInteractive()
+      .on("pointerdown", () => {
+        this.menuButton.setScale(0.085);
+        setTimeout(() => {
+          this.menuButton.setScale(0.08);
+        }, 100);
+        menuShowing = !menuShowing;
+      });
 
     this.wintext = this.add
       .text(125, 40, "Wins", { font: "50px Trebuchet MS", fill: "#FFFFFF" })
@@ -165,46 +165,50 @@ export default class InGame extends Phaser.Scene {
       .text(125, 560, "You", { font: "50px Trebuchet MS", fill: "#FFFFFF" })
       .setOrigin(0.5, 0.5);
 
-    this.myhand = this.add.image(myHandX, myHandY, `${myHandValue}`);
-    this.myhand.setScale(0.5, -0.5);
+    this.myhand = this.add
+      .image(myHandX, myHandY, `${myHandValue}`)
+      .setScale(0.5, -0.5);
     this.myhand.angle = myHandAngle;
 
-    this.yourhand = this.add.image(yourHandX, yourHandY, `${yourHandValue}`);
-    this.yourhand.setScale(0.5);
+    this.yourhand = this.add
+      .image(yourHandX, yourHandY, `${yourHandValue}`)
+      .setScale(0.5);
     this.yourhand.angle = yourHandAngle;
 
-    this.handsmenu = this.add.image(640, 720, "hands_menu");
-    this.handsmenu.setScale(0.2);
+    this.handsmenu = this.add.image(640, 720, "hands_menu").setScale(0.2);
 
-    this.rockbutton = this.add.image(400, 680, "rock");
-    this.rockbutton.setScale(0.2);
-    this.rockbutton.setInteractive();
-    this.rockbutton.on("pointerdown", async () => {
-      playerChoice = 0;
-      animationAndResult();
-      this.playerindicator.setVisible(false);
-      this.aiindicator.setVisible(false);
-    });
+    this.rockbutton = this.add
+      .image(400, 680, "rock")
+      .setScale(0.2)
+      .setInteractive()
+      .on("pointerdown", async () => {
+        playerChoice = 0;
+        animationAndResult();
+        this.playerindicator.setVisible(false);
+        this.aiindicator.setVisible(false);
+      });
 
-    this.paperbutton = this.add.image(640, 680, "paper");
-    this.paperbutton.setScale(0.2);
-    this.paperbutton.setInteractive();
-    this.paperbutton.on("pointerdown", async () => {
-      playerChoice = 1;
-      animationAndResult();
-      this.playerindicator.setVisible(false);
-      this.aiindicator.setVisible(false);
-    });
+    this.paperbutton = this.add
+      .image(640, 680, "paper")
+      .setScale(0.2)
+      .setInteractive()
+      .on("pointerdown", async () => {
+        playerChoice = 1;
+        animationAndResult();
+        this.playerindicator.setVisible(false);
+        this.aiindicator.setVisible(false);
+      });
 
-    this.scissorsbutton = this.add.image(880, 680, "scissors");
-    this.scissorsbutton.setScale(0.2);
-    this.scissorsbutton.setInteractive();
-    this.scissorsbutton.on("pointerdown", async () => {
-      playerChoice = 2;
-      animationAndResult();
-      this.playerindicator.setVisible(false);
-      this.aiindicator.setVisible(false);
-    });
+    this.scissorsbutton = this.add
+      .image(880, 680, "scissors")
+      .setScale(0.2)
+      .setInteractive()
+      .on("pointerdown", async () => {
+        playerChoice = 2;
+        animationAndResult();
+        this.playerindicator.setVisible(false);
+        this.aiindicator.setVisible(false);
+      });
 
     this.resulttext = this.add
       .text(640, 650, resultText, {
@@ -213,64 +217,71 @@ export default class InGame extends Phaser.Scene {
       })
       .setOrigin(0.5, 0.5);
 
-    this.greyoverlay = this.add.image(640, 360, "grey_overlay");
-    this.greyoverlay.setInteractive();
-    this.greyoverlay.on("pointerdown", () => (menuShowing = !menuShowing));
-    this.greyoverlay.setVisible(menuShowing);
+    this.greyoverlay = this.add
+      .image(640, 360, "grey_overlay")
+      .setInteractive()
+      .on("pointerdown", () => (menuShowing = !menuShowing))
+      .setVisible(menuShowing);
 
     this.menubackground = this.add
       .image(640, 360, "menu_bg")
-      .setOrigin(0.5, 0.5);
-    this.menubackground.setScale(0.2);
-    this.menubackground.setVisible(menuShowing);
+      .setOrigin(0.5, 0.5)
+      .setScale(0.2)
+      .setVisible(menuShowing);
 
-    this.homebutton = this.add.image(640, 360, "home").setOrigin(0.5, 0.5);
-    this.homebutton.setScale(0.1);
-    this.homebutton.setVisible(menuShowing);
-    this.homebutton.setInteractive();
-    this.homebutton.on("pointerdown", () => {
-      this.homebutton.setScale(0.105);
-      setTimeout(() => {
-        this.homebutton.setScale(0.1);
-      }, 100);
-      setTimeout(() => {
-        this.scene.switch("mainScreenScene");
-        menuShowing = !menuShowing;
-      }, 150);
-    });
+    this.homebutton = this.add
+      .image(640, 360, "home")
+      .setOrigin(0.5, 0.5)
+      .setScale(0.1)
+      .setVisible(menuShowing)
+      .setInteractive()
+      .on("pointerdown", () => {
+        this.homebutton.setScale(0.105);
+        setTimeout(() => {
+          this.homebutton.setScale(0.1);
+        }, 100);
+        setTimeout(() => {
+          this.scene.switch("mainScreenScene");
+          menuShowing = !menuShowing;
+        }, 150);
+      });
 
-    this.reloadbutton = this.add.image(500, 360, "reload").setOrigin(0.5, 0.5);
-    this.reloadbutton.setScale(0.1);
-    this.reloadbutton.setVisible(menuShowing);
-    this.reloadbutton.setInteractive();
-    this.reloadbutton.on("pointerdown", () => {
-      this.reloadbutton.setScale(0.105);
-      setTimeout(() => {
-        this.reloadbutton.setScale(0.1);
-      }, 100);
-      setTimeout(() => {
-        winCounter = 0;
-        drawCounter = 0;
-        lossCounter = 0;
-        this.playerindicator.setVisible(true);
-        this.aiindicator.setVisible(true);
-        menuShowing = !menuShowing;
-      }, 150);
-    });
+    this.reloadbutton = this.add
+      .image(500, 360, "reload")
+      .setOrigin(0.5, 0.5)
+      .setScale(0.1)
+      .setVisible(menuShowing)
+      .setInteractive()
+      .on("pointerdown", () => {
+        this.reloadbutton.setScale(0.105);
+        setTimeout(() => {
+          this.reloadbutton.setScale(0.1);
+        }, 100);
+        setTimeout(() => {
+          winCounter = 0;
+          drawCounter = 0;
+          lossCounter = 0;
+          this.playerindicator.setVisible(true);
+          this.aiindicator.setVisible(true);
+          menuShowing = !menuShowing;
+        }, 150);
+      });
 
-    this.musicbutton = this.add.image(780, 360, "music").setOrigin(0.5, 0.5);
-    this.musicbutton.setScale(0.1);
-    this.musicbutton.setVisible(menuShowing);
-    this.musicbutton.setInteractive();
-    this.musicbutton.on("pointerdown", () => {
-      this.musicbutton.setScale(0.105);
-      setTimeout(() => {
-        this.musicbutton.setScale(0.1);
-      }, 100);
-      setTimeout(async () => {
-        this.game.sound.mute = !this.game.sound.mute;
-      }, 10);
-    });
+    this.musicbutton = this.add
+      .image(780, 360, "music")
+      .setOrigin(0.5, 0.5)
+      .setScale(0.1)
+      .setVisible(menuShowing)
+      .setInteractive()
+      .on("pointerdown", () => {
+        this.musicbutton.setScale(0.105);
+        setTimeout(() => {
+          this.musicbutton.setScale(0.1);
+        }, 100);
+        setTimeout(async () => {
+          this.game.sound.mute = !this.game.sound.mute;
+        }, 10);
+      });
   }
 
   update() {

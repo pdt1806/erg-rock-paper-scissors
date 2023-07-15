@@ -17,31 +17,47 @@ export default class MainScreen extends Phaser.Scene {
       })
       .setOrigin(1, 0.5);
 
-    this.playButton = this.add.image(640, 520, "play_button");
-    this.playButton.setScale(0.08);
-    this.playButton.setInteractive();
-    this.playButton.on("pointerdown", () => {
-      this.playButton.setScale(0.085);
-      setTimeout(() => {
-        this.playButton.setScale(0.08);
-      }, 100);
-      setTimeout(() => {
-        this.scene.start("inGameScene");
-      }, 150);
-    });
+    this.playButton = this.add
+      .image(640, 520, "play_button")
+      .setScale(0.08)
+      .setInteractive()
+      .on("pointerdown", () => {
+        this.playButton.setScale(0.085);
+        setTimeout(() => {
+          this.playButton.setScale(0.08);
+        }, 100);
+        setTimeout(() => {
+          this.scene.start("inGameScene");
+        }, 150);
+      });
 
-    this.musicButton = this.add.image(500, 520, "music");
-    this.musicButton.setScale(0.08);
-    this.musicButton.setInteractive();
-    this.musicButton.on("pointerdown", () => {
-      this.musicButton.setScale(0.085);
-      setTimeout(() => {
-        this.musicButton.setScale(0.08);
-      }, 100);
-      setTimeout(async () => {
-        this.game.sound.mute = !this.game.sound.mute;
-      }, 10);
-    });
+    this.musicButton = this.add
+      .image(500, 520, "music")
+      .setScale(0.08)
+      .setInteractive()
+      .on("pointerdown", () => {
+        this.musicButton.setScale(0.085);
+        setTimeout(() => {
+          this.musicButton.setScale(0.08);
+        }, 100);
+        setTimeout(async () => {
+          this.game.sound.mute = !this.game.sound.mute;
+        }, 10);
+      });
+
+    this.attributionsButton = this.add
+      .image(780, 520, "attributions")
+      .setScale(0.08)
+      .setInteractive()
+      .on("pointerdown", () => {
+        this.attributionsButton.setScale(0.085);
+        setTimeout(() => {
+          this.attributionsButton.setScale(0.08);
+        }, 100);
+        setTimeout(async () => {
+          this.scene.start("attributionsScene");
+        }, 150);
+      });
 
     this.brand_white = this.add.image(110, 690, "erg_brand_white");
     this.brand_white.setScale(0.05);
