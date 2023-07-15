@@ -22,11 +22,6 @@ export default class MainScreen extends Phaser.Scene {
         this.scene.start("inGameScene");
       }, 150);
     });
-    this.bgm = this.sound.add("bgm", { loop: true, volume: 0.4 });
-    if (!bgmInitialized && bgmPlaying) {
-      this.bgm.play();
-    }
-    bgmInitialized = true;
 
     this.musicButton = this.add.image(500, 460, "music");
     this.musicButton.setScale(0.08);
@@ -36,10 +31,9 @@ export default class MainScreen extends Phaser.Scene {
       setTimeout(() => {
         this.musicButton.setScale(0.08);
       }, 100);
-      bgmPlaying = !bgmPlaying;
       setTimeout(async () => {
-        bgmPlaying ? this.bgm.play() : this.bgm.stop();
-      }, 150);
+        this.game.sound.mute = !this.game.sound.mute;
+      }, 10);
     });
 
     this.brand_white = this.add.image(110, 690, "erg_brand_white");
@@ -47,6 +41,6 @@ export default class MainScreen extends Phaser.Scene {
   }
 
   update() {
-    this.musicButton.setTexture(bgmPlaying ? "music" : "music_off");
+    this.musicButton.setTexture(!this.game.sound.mute ? "music" : "music_off");
   }
 }

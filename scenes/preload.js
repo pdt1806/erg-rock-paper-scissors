@@ -32,6 +32,8 @@ export default class Preload extends Phaser.Scene {
         fill: "#FFFFFF",
       }
     );
+    const bgm = this.sound.add("bgm", { loop: true, volume: 0.4 });
+    bgm.play();
     this.scene.start("mainScreenScene");
   }
 }

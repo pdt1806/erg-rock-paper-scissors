@@ -267,10 +267,9 @@ export default class InGame extends Phaser.Scene {
       setTimeout(() => {
         this.musicbutton.setScale(0.1);
       }, 100);
-      bgmPlaying = !bgmPlaying;
-      // setTimeout(async () => {
-      //   bgmPlaying ? this.bgm.play() : this.bgm.stop();
-      // }, 150);
+      setTimeout(async () => {
+        this.game.sound.mute = !this.game.sound.mute;
+      }, 10);
     });
   }
 
@@ -296,7 +295,7 @@ export default class InGame extends Phaser.Scene {
 
     this.resulttext.setText(resultText);
 
-    this.musicbutton.setTexture(bgmPlaying ? "music" : "music_off");
+    this.musicbutton.setTexture(!this.game.sound.mute ? "music" : "music_off");
 
     this.greyoverlay.setVisible(menuShowing);
     this.menubackground.setVisible(menuShowing);
