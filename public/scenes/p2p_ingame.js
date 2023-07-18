@@ -10,7 +10,9 @@ function generateRandomId(length) {
   return "CL" + result;
 }
 
-const socket = io();
+var roomJoined = false;
+
+var timeoutId;
 
 var winCounter = 0;
 var drawCounter = 0;
@@ -19,6 +21,10 @@ var lossCounter = 0;
 var menuShowing = false;
 
 var opponentLeft = false;
+
+var opponentIsHere = false;
+
+var hasReloaded = false;
 
 var myHandAngle = -90;
 var opponentHandAngle = -90;
@@ -47,9 +53,7 @@ const handValues = {
 var myHandValue = handValues[0];
 var opponentHandValue = handValues[0];
 
-var roomId = generateRandomId(8);
-
-const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+var roomId;
 
 const handPlaying = async () => {
   hideHandButtons(true);
@@ -59,14 +63,14 @@ const handPlaying = async () => {
         opponentHandAngle++;
         opponentHandX += 2;
         opponentHandY -= 5;
-        await delay(10);
+        await window.delay(10);
       }
-      await delay(30);
+      await window.delay(30);
       for (var i = 0; i < 15; i++) {
         opponentHandAngle--;
         opponentHandX -= 2;
         opponentHandY += 5;
-        await delay(10);
+        await window.delay(10);
       }
     }
   })();
@@ -77,14 +81,14 @@ const handPlaying = async () => {
         myHandAngle--;
         myHandX -= 2;
         myHandY -= 5;
-        await delay(10);
+        await window.delay(10);
       }
-      await delay(30);
+      await window.delay(30);
       for (var i = 0; i < 15; i++) {
         myHandAngle++;
         myHandX += 2;
         myHandY += 5;
-        await delay(10);
+        await window.delay(10);
       }
     }
   })();
@@ -102,17 +106,20 @@ const waitingForOpponent = () => {
   hideHandButtons(true);
   resultText = "The opponent is choosing...";
   if (opponentChoice !== null) {
+    resultText = "";
     animationAndResult();
+    return;
   } else if (opponentLeft) {
-    resultText = "The opponent left the game!";
     return;
   }
-  socket.on("opponentHand", (value) => {
-    opponentChoice = value;
+  window.socket.on("opponentHand", (value) => {
+    if (value[0] !== window.socket.id) {
+      opponentChoice = value[1];
+    }
   });
-  socket.on("opponentLeft", () => {
+  window.socket.on("opponentLeft", () => {
     opponentLeft = true;
-    reloadGame();
+    opponentIsHere = false;
   });
   setTimeout(waitingForOpponent, 1);
 };
@@ -134,7 +141,7 @@ const result = async () => {
     lossCounter++;
     resultText = "You lose!";
   }
-  await delay(1234);
+  await window.delay(1234);
   hideHandButtons(false);
   myHandValue = handValues[0];
   opponentHandValue = handValues[0];
@@ -149,15 +156,30 @@ const animationAndResult = async () => {
 };
 
 const reloadGame = () => {
-  menuShowing = false;
+  opponentLeft = false;
   winCounter = 0;
   drawCounter = 0;
   lossCounter = 0;
+  myHandAngle = -90;
+  opponentHandAngle = -90;
+  myHandX = 240;
+  opponentHandX = 1360;
+  myHandY = 420;
+  opponentHandY = 420;
+  opponentChoice = null;
+  myHandValue = handValues[0];
+  opponentHandValue = handValues[0];
+  playerChoice = null;
+  roomJoined = false;
   hideHandButtons(true);
   resultText = "Waiting for another player...";
-  setTimeout(() => {
-    opponentLeft = false;
-  }, 10);
+  hasReloaded = true;
+};
+
+const opponentLeftProcedure = async () => {
+  resultText = "The opponent has left the game!";
+  hideHandButtons(true);
+  await window.delay(3000);
 };
 
 export default class P2Pingame extends Phaser.Scene {
@@ -166,45 +188,40 @@ export default class P2Pingame extends Phaser.Scene {
   }
 
   create() {
-    const createRoom = () => {
-      socket.emit("createRoom", roomId);
-    };
+    window.socket.emit("getAvailableRoomsForClassic");
 
-    const joinRoom = (roomId) => {
-      socket.emit("joinRoom", roomId);
-    };
-
-    const checkAvailableRooms = () => {
-      socket.emit("getAvailableRooms");
-    };
-
-    checkAvailableRooms();
-
-    socket.on("availableRooms", (availableRoomId) => {
-      if (availableRoomId) {
+    window.socket.on("availableRoomsForClassic", (availableRoomId) => {
+      if (availableRoomId && !roomJoined) {
         roomId = availableRoomId;
-        joinRoom(availableRoomId);
-      } else {
-        createRoom();
-        joinRoom(roomId);
+      } else if (!roomJoined) {
+        roomId = generateRandomId(8);
       }
+      window.socket.emit("joinRoom", roomId, window.publicP2P);
+      roomJoined = true;
     });
 
-    socket.on("opponentLeft", () => {
+    window.socket.on("opponentLeft", () => {
       opponentLeft = true;
-      reloadGame();
+      opponentIsHere = false;
       this.playerindicator.setVisible(true);
       this.opponentindicator.setVisible(true);
     });
 
-    socket.on("gameStart", () => {
-      console.log("Game started!");
+    window.socket.on("gameStart", () => {
       resultText = "";
       hideHandButtons(false);
+      opponentIsHere = true;
+      hasReloaded = false;
+      console.log("reloaded");
+      reloadGame();
+      hideHandButtons(false);
+      resultText = "";
     });
 
-    socket.on("opponentHand", (value) => {
-      opponentChoice = value;
+    window.socket.on("opponentHand", (value) => {
+      if (value[0] !== window.socket.id) {
+        opponentChoice = value[1];
+      }
     });
 
     this.background = this.add
@@ -286,7 +303,10 @@ export default class P2Pingame extends Phaser.Scene {
       .setScale(0.6);
     this.opponentHand.angle = opponentHandAngle;
 
-    this.handsmenu = this.add.image(800, 860, "hands_menu").setScale(0.25);
+    this.handsmenu = this.add
+      .image(800, 860, "hands_menu")
+      .setOrigin(0.5, 0.5)
+      .setScale(0.3, 0.25);
 
     this.rockbutton = this.add
       .image(560, 850, "rock")
@@ -294,7 +314,9 @@ export default class P2Pingame extends Phaser.Scene {
       .setInteractive()
       .on("pointerdown", async () => {
         playerChoice = 0;
-        socket.emit("playerHand", 0, roomId);
+        window.socket.emit("playerHand", 0, roomId);
+        this.opponentindicator.setVisible(false);
+        this.playerindicator.setVisible(false);
         waitingForOpponent();
       });
 
@@ -304,7 +326,9 @@ export default class P2Pingame extends Phaser.Scene {
       .setInteractive()
       .on("pointerdown", async () => {
         playerChoice = 1;
-        socket.emit("playerHand", 1, roomId);
+        window.socket.emit("playerHand", 1, roomId);
+        this.opponentindicator.setVisible(false);
+        this.playerindicator.setVisible(false);
         waitingForOpponent();
       });
 
@@ -314,13 +338,17 @@ export default class P2Pingame extends Phaser.Scene {
       .setInteractive()
       .on("pointerdown", async () => {
         playerChoice = 2;
-        socket.emit("playerHand", 2, roomId);
+        window.socket.emit("playerHand", 2, roomId);
+        this.opponentindicator.setVisible(false);
+        this.playerindicator.setVisible(false);
         waitingForOpponent();
       });
 
     this.resulttext = this.add
       .text(800, 830, resultText, {
-        font: "60px Trebuchet MS",
+        font: `${
+          resultText === "The opponent has left the game!" ? "50" : "60"
+        }px Trebuchet MS`,
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
@@ -351,27 +379,23 @@ export default class P2Pingame extends Phaser.Scene {
           this.homebutton.setScale(0.1);
         }, 100);
         setTimeout(() => {
+          window.socket.emit("leaveRoom", roomId, window.publicP2P);
           reloadGame();
+          menuShowing = false;
+          hasReloaded = false;
           this.playerindicator.setVisible(true);
           this.opponentindicator.setVisible(true);
-          socket.emit("leaveRoom", roomId);
-          socket.disconnect();
           this.scene.switch("mainScreenScene");
-        }, 150);
-        setTimeout(() => {
           this.scene.stop("p2pingameScene");
-        }, 200);
+        }, 150);
       });
 
     this.reloadbutton = this.add
-      .image(650, 450, "reload")
+      .image(650, 450, "reload_disabled")
       .setOrigin(0.5, 0.5)
       .setScale(0.1)
       .setVisible(menuShowing)
-      .setInteractive()
-      .on("pointerdown", () => {
-        null;
-      });
+      .setInteractive();
 
     this.musicbutton = this.add
       .image(950, 450, "music")
@@ -391,6 +415,10 @@ export default class P2Pingame extends Phaser.Scene {
   }
 
   update() {
+    if (opponentLeft) {
+      opponentLeftProcedure();
+    }
+
     this.myhand.angle = myHandAngle;
     this.myhand.x = myHandX;
     this.myhand.y = myHandY;
@@ -411,6 +439,11 @@ export default class P2Pingame extends Phaser.Scene {
     this.lossscore.setText(`${lossCounter}`);
 
     this.resulttext.setText(resultText);
+    this.resulttext.setFont(
+      `${
+        resultText === "The opponent has left the game!" ? "50" : "60"
+      }px Trebuchet MS`
+    );
 
     this.musicbutton.setTexture(!this.game.sound.mute ? "music" : "music_off");
 

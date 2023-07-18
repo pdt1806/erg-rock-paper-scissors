@@ -30,8 +30,6 @@ const handValues = {
 var myHandValue = handValues[0];
 var yourHandValue = handValues[0];
 
-const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-
 const handPlaying = async () => {
   const yourHandAnimation = (async () => {
     for (var j = 0; j < 3; j++) {
@@ -39,14 +37,14 @@ const handPlaying = async () => {
         yourHandAngle++;
         yourHandX += 2;
         yourHandY -= 5;
-        await delay(10);
+        await window.delay(10);
       }
-      await delay(30);
+      await window.delay(30);
       for (var i = 0; i < 15; i++) {
         yourHandAngle--;
         yourHandX -= 2;
         yourHandY += 5;
-        await delay(10);
+        await window.delay(10);
       }
     }
   })();
@@ -57,14 +55,14 @@ const handPlaying = async () => {
         myHandAngle--;
         myHandX -= 2;
         myHandY -= 5;
-        await delay(10);
+        await window.delay(10);
       }
-      await delay(30);
+      await window.delay(30);
       for (var i = 0; i < 15; i++) {
         myHandAngle++;
         myHandX += 2;
         myHandY += 5;
-        await delay(10);
+        await window.delay(10);
       }
     }
   })();
@@ -95,7 +93,7 @@ const result = async () => {
     lossCounter++;
     resultText = "You lose!";
   }
-  await delay(1234);
+  await window.delay(1234);
   hideHandButtons(false);
   myHandValue = handValues[0];
   yourHandValue = handValues[0];
@@ -193,7 +191,10 @@ export default class ingame extends Phaser.Scene {
       .setScale(0.6);
     this.yourhand.angle = yourHandAngle;
 
-    this.handsmenu = this.add.image(800, 860, "hands_menu").setScale(0.25);
+    this.handsmenu = this.add
+      .image(800, 860, "hands_menu")
+      .setOrigin(0.5, 0.5)
+      .setScale(0.3, 0.25);
 
     this.rockbutton = this.add
       .image(560, 850, "rock")
