@@ -181,7 +181,7 @@ export default class P2PModeChoosing extends Phaser.Scene {
 
     this.idInput = this.add
       .dom(800, 420)
-      .createFromCache("form", "value=''")
+      .createFromCache("form")
       .setVisible(menuShowing);
 
     this.invalidIdIndicatorText = this.add
