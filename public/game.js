@@ -11,9 +11,13 @@ var config = {
     autoCenter: Phaser.Scale.CENTER_BOTH,
     mode: Phaser.Scale.FIT,
   },
+
   width: 1600,
   height: 900,
   backgroundColor: 0x000000,
+  dom: {
+    createContainer: true,
+  },
   scene: [
     Preload,
     MainScreen,

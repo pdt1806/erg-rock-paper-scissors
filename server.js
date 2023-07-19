@@ -38,23 +38,20 @@ io.on("connection", (socket) => {
         rooms[roomId] = [];
       }
 
-      if (!rooms[roomId].includes(socket.id)) {
-        rooms[roomId].push(socket.id);
+      if (!rooms[roomId].some((arr) => arr.includes(socket.id))) {
+        rooms[roomId].push([socket.id]);
       }
-
-      console.log(rooms);
     } else {
       if (!privateRooms[roomId]) {
         privateRooms[roomId] = [];
       }
 
-      if (!privateRooms[roomId].includes(socket.id)) {
-        privateRooms[roomId].push(socket.id);
+      if (!privateRooms[roomId].includes([socket.id])) {
+        privateRooms[roomId].push([socket.id]);
       }
-
-      console.log(privateRooms);
     }
-
+    console.log(rooms);
+    console.log(privateRooms);
     if (hasEnoughPlayers(roomId)) {
       io.to(roomId).emit("gameStart");
     }
@@ -69,7 +66,7 @@ io.on("connection", (socket) => {
         delete rooms[roomId];
       } else {
         rooms[roomId] = rooms[roomId].filter(
-          (playerId) => playerId !== socket.id
+          (playerId) => playerId[0] !== socket.id
         );
         if (rooms[roomId].length === 0) {
           delete rooms[roomId];
@@ -80,7 +77,7 @@ io.on("connection", (socket) => {
         delete privateRooms[roomId];
       } else {
         privateRooms[roomId] = privateRooms[roomId].filter(
-          (playerId) => playerId !== socket.id
+          (playerId) => playerId[0] !== socket.id
         );
         if (privateRooms[roomId].length === 0) {
           delete privateRooms[roomId];
@@ -90,13 +87,40 @@ io.on("connection", (socket) => {
 
     console.log(rooms);
     console.log(privateRooms);
-
     io.to(roomId).emit("opponentLeft");
   });
 
-  socket.on("playerHand", (data, roomId) => {
-    value = [socket.id, data];
-    io.to(roomId).emit("opponentHand", value);
+  socket.on("playerHand", (data, roomId, status) => {
+    if (status) {
+      if (rooms[roomId][0][0] === socket.id) {
+        rooms[roomId][0].push(data);
+      } else {
+        rooms[roomId][1].push(data);
+      }
+      console.log(rooms);
+      if (rooms[roomId][0].length === 2 && rooms[roomId][1].length === 2) {
+        io.to(roomId).emit("opponentHand", rooms[roomId]);
+        rooms[roomId][0].pop();
+        rooms[roomId][1].pop();
+      }
+    } else {
+      if (privateRooms[roomId][0][0] === socket.id) {
+        privateRooms[roomId][0].push(data);
+      } else {
+        privateRooms[roomId][1].push(data);
+      }
+      console.log(privateRooms);
+      if (
+        privateRooms[roomId][0].length === 2 &&
+        privateRooms[roomId][1].length === 2
+      ) {
+        io.to(roomId).emit("opponentHand", privateRooms[roomId]);
+        privateRooms[roomId][0].pop();
+        privateRooms[roomId][1].pop();
+      }
+    }
+    console.log(rooms);
+    console.log(privateRooms);
   });
 
   socket.on("getAvailableRoomsForClassic", () => {
@@ -107,24 +131,38 @@ io.on("connection", (socket) => {
   });
 
   socket.on("getAvailableRoomsForPrivate", () => {
-    const availableRoomId = Object.keys(rooms).find(
-      (roomId) => rooms[roomId].length === 1 && roomId.length === 10
+    const availableRoomId = Object.keys(privateRooms).find(
+      (roomId) => privateRooms[roomId].length === 1 && roomId.length === 10
     );
     socket.emit("availableRoomsForPrivate", availableRoomId);
   });
 
   socket.on("disconnect", () => {
     console.log("A user disconnected.");
-
     for (const roomId in rooms) {
       rooms[roomId] = rooms[roomId].filter(
-        (playerId) => playerId !== socket.id
+        (playerId) => playerId[0] !== socket.id
       );
 
       if (rooms[roomId].length === 0) {
         delete rooms[roomId];
+      } else if (rooms[roomId].length === 1) {
+        io.to(roomId).emit("opponentLeft");
       }
     }
+    for (const roomId in privateRooms) {
+      privateRooms[roomId] = privateRooms[roomId].filter(
+        (playerId) => playerId[0] !== socket.id
+      );
+
+      if (privateRooms[roomId].length === 0) {
+        delete privateRooms[roomId];
+      } else if (privateRooms[roomId].length === 1) {
+        io.to(roomId).emit("opponentLeft");
+      }
+    }
+    console.log(rooms);
+    console.log(privateRooms);
   });
 });
 
