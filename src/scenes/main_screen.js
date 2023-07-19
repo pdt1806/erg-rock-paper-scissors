@@ -34,7 +34,7 @@ export default class MainScreen extends Phaser.Scene {
       });
 
     this.twoPlayersButton = this.add
-      .image(800, 700, "p2p_button")
+      .image(800, 700, "pvp_button")
       .setScale(0.1)
       .setInteractive()
       .on("pointerdown", () => {
@@ -43,7 +43,7 @@ export default class MainScreen extends Phaser.Scene {
           this.twoPlayersButton.setScale(0.1);
         }, 100);
         setTimeout(() => {
-          this.scene.launch("p2pModeChoosingScene");
+          this.scene.launch("pvpModeChoosingScene");
           this.scene.stop("mainScreenScene");
         }, 150);
       });

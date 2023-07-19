@@ -6,15 +6,15 @@ export default class Preload extends Phaser.Scene {
   preload() {
     this.load.image("erg_brand_white", "lib/ERG-brand-white.png");
     this.load.image("background", "lib/background.png");
-    this.load.image("background_p2p", "lib/background_p2p.png");
+    this.load.image("background_pvp", "lib/background_pvp.png");
     this.load.image("background_ingame", "lib/background_ingame.png");
     this.load.image("title", "lib/title.png");
     this.load.image("rock", "lib/hands/rock.png");
     this.load.image("paper", "lib/hands/paper.png");
     this.load.image("scissors", "lib/hands/scissors.png");
     this.load.image("play_button", "lib/play_button.png");
-    this.load.image("p2p_button", "lib/p2p_button.png");
-    this.load.image("p2p_mode_button", "lib/p2p_mode_button.png");
+    this.load.image("pvp_button", "lib/pvp_button.png");
+    this.load.image("pvp_mode_button", "lib/pvp_mode_button.png");
     this.load.image("menu_button", "lib/menu_button.png");
     this.load.image("hands_menu", "lib/hands/hands_menu.png");
     this.load.audio("bgm", "lib/audio/bgm.mp3");

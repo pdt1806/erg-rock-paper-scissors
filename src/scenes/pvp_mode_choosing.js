@@ -2,14 +2,14 @@ var menuShowing = false;
 
 var invalidIdIndicator = false;
 
-export default class P2PModeChoosing extends Phaser.Scene {
+export default class PvPModeChoosing extends Phaser.Scene {
   constructor() {
-    super("p2pModeChoosingScene");
+    super("pvpModeChoosingScene");
   }
 
   create() {
     this.background = this.add
-      .image(800, 450, "background_p2p")
+      .image(800, 450, "background_pvp")
       .setOrigin(0.5, 0.5)
       .setScale(0.5);
 
@@ -23,7 +23,7 @@ export default class P2PModeChoosing extends Phaser.Scene {
       .setOrigin(1, 0.5);
 
     this.classic = this.add
-      .image(800, 570, "p2p_mode_button")
+      .image(800, 570, "pvp_mode_button")
       .setScale(0.1)
       .setInteractive()
       .on("pointerdown", () => {
@@ -34,8 +34,8 @@ export default class P2PModeChoosing extends Phaser.Scene {
           this.classic_text.setScale(1);
         }, 100);
         setTimeout(() => {
-          this.scene.launch("p2pingameScene");
-          this.scene.stop("p2pModeChoosingScene");
+          this.scene.launch("pvpingameScene");
+          this.scene.stop("pvpModeChoosingScene");
         }, 150);
       });
     this.classic_text = this.add
@@ -46,7 +46,7 @@ export default class P2PModeChoosing extends Phaser.Scene {
       .setOrigin(0.5, 0.5);
 
     // this.tenToWin = this.add
-    //   .image(660, 680, "p2p_mode_button")
+    //   .image(660, 680, "pvp_mode_button")
     //   .setScale(0.11, 0.1)
     //   .setInteractive()
     //   .on("pointerdown", () => {
@@ -68,7 +68,7 @@ export default class P2PModeChoosing extends Phaser.Scene {
     //   .setOrigin(0.5, 0.5);
 
     // this.twentyToWin = this.add
-    //   .image(940, 680, "p2p_mode_button")
+    //   .image(940, 680, "pvp_mode_button")
     //   .setScale(0.11, 0.1)
     //   .setInteractive()
     //   .on("pointerdown", () => {
@@ -90,7 +90,7 @@ export default class P2PModeChoosing extends Phaser.Scene {
     //   .setOrigin(0.5, 0.5);
 
     this.joinRoom = this.add
-      .image(800, 790, "p2p_mode_button")
+      .image(800, 790, "pvp_mode_button")
       .setScale(0.13, 0.1)
       .setInteractive()
       .on("pointerdown", () => {
@@ -135,7 +135,7 @@ export default class P2PModeChoosing extends Phaser.Scene {
           this.globalButton.setScale(0.1);
         }, 100);
         setTimeout(async () => {
-          window.publicP2P = !window.publicP2P;
+          window.publicPvP = !window.publicPvP;
         }, 10);
       });
 
@@ -150,7 +150,7 @@ export default class P2PModeChoosing extends Phaser.Scene {
         }, 100);
         setTimeout(async () => {
           this.scene.launch("mainScreenScene");
-          this.scene.stop("p2pModeChoosingScene");
+          this.scene.stop("pvpModeChoosingScene");
         }, 150);
       });
 
@@ -213,11 +213,11 @@ export default class P2PModeChoosing extends Phaser.Scene {
             window.socket.on("answerForPrivateRoom", (value) => {
               if (value[0] == id) {
                 if (value[1]) {
-                  window.publicP2P = false;
+                  window.publicPvP = false;
                   window.joinById = true;
                   window.roomId = value[0];
-                  this.scene.launch("p2pingameScene");
-                  this.scene.stop("p2pModeChoosingScene");
+                  this.scene.launch("pvpingameScene");
+                  this.scene.stop("pvpModeChoosingScene");
                   menuShowing = false;
                   invalidIdIndicator = false;
                 } else {
@@ -233,7 +233,7 @@ export default class P2PModeChoosing extends Phaser.Scene {
 
   update() {
     this.musicButton.setTexture(!this.game.sound.mute ? "music" : "music_off");
-    this.globalButton.setTexture(window.publicP2P ? "global" : "global_off");
+    this.globalButton.setTexture(window.publicPvP ? "global" : "global_off");
     this.greyoverlay.setVisible(menuShowing);
     this.menubackground.setVisible(menuShowing);
     this.idInput.setVisible(menuShowing);

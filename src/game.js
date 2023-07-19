@@ -1,9 +1,9 @@
 import Attributions from "./scenes/attributions.js";
 import ingame from "./scenes/ingame.js";
 import MainScreen from "./scenes/main_screen.js";
-import P2Pingame from "./scenes/p2p_ingame.js";
-import P2PModeChoosing from "./scenes/p2p_mode_choosing.js";
 import Preload from "./scenes/preload.js";
+import PvPingame from "./scenes/pvp_ingame.js";
+import PvPModeChoosing from "./scenes/pvp_mode_choosing.js";
 
 var config = {
   scale: {
@@ -23,8 +23,8 @@ var config = {
     MainScreen,
     ingame,
     Attributions,
-    P2PModeChoosing,
-    P2Pingame,
+    PvPModeChoosing,
+    PvPingame,
   ],
 };
 
