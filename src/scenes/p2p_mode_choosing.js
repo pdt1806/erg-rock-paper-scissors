@@ -35,6 +35,7 @@ export default class P2PModeChoosing extends Phaser.Scene {
         }, 100);
         setTimeout(() => {
           this.scene.launch("p2pingameScene");
+          this.scene.stop("p2pModeChoosingScene");
         }, 150);
       });
     this.classic_text = this.add
@@ -56,7 +57,7 @@ export default class P2PModeChoosing extends Phaser.Scene {
     //       this.tenToWin_text.setScale(1);
     //     }, 100);
     //     setTimeout(() => {
-    //       this.scene.start("ingameScene");
+    //       this.scene.launch("ingameScene");
     //     }, 150);
     //   });
     // this.tenToWin_text = this.add
@@ -78,7 +79,7 @@ export default class P2PModeChoosing extends Phaser.Scene {
     //       this.twentyToWin_text.setScale(1);
     //     }, 100);
     //     setTimeout(() => {
-    //       this.scene.start("ingameScene");
+    //       this.scene.launch("ingameScene");
     //     }, 150);
     //   });
     // this.twentyToWin_text = this.add
@@ -148,7 +149,8 @@ export default class P2PModeChoosing extends Phaser.Scene {
           this.homeButton.setScale(0.1);
         }, 100);
         setTimeout(async () => {
-          this.scene.start("mainScreenScene");
+          this.scene.launch("mainScreenScene");
+          this.scene.stop("p2pModeChoosingScene");
         }, 150);
       });
 
@@ -193,7 +195,7 @@ export default class P2PModeChoosing extends Phaser.Scene {
       .setVisible(invalidIdIndicator);
 
     this.enterIdButton = this.add
-      .image(1000, 500, "home")
+      .image(1000, 500, "enter")
       .setOrigin(0.5, 0.5)
       .setScale(0.08)
       .setInteractive()
@@ -203,22 +205,30 @@ export default class P2PModeChoosing extends Phaser.Scene {
           this.enterIdButton.setScale(0.08);
         }, 100);
         setTimeout(() => {
-          var id = this.idInput.getChildByName("id");
-          if (id.value.length === 6) {
-            this.scene.launch("p2pingameScene", { roomId: id.value });
-            menuShowing = !menuShowing;
-            invalidIdIndicator = false;
-          } else {
+          const id = this.idInput.getChildByName("id").value;
+          if (id.length !== 10) {
             invalidIdIndicator = true;
+          } else {
+            window.socket.emit("askForPrivateRoom", id);
+            window.socket.on("answerForPrivateRoom", (value) => {
+              if (value[0] == id) {
+                if (value[1]) {
+                  window.publicP2P = false;
+                  window.joinById = true;
+                  window.roomId = value[0];
+                  this.scene.launch("p2pingameScene");
+                  this.scene.stop("p2pModeChoosingScene");
+                  menuShowing = false;
+                  invalidIdIndicator = false;
+                } else {
+                  invalidIdIndicator = true;
+                }
+              }
+            });
           }
         }, 150);
       })
       .setVisible(menuShowing);
-
-    // this.idText.on("down", (event) => {
-    //   var id = this.idInput.getChildByName("id");
-    //   menuShowing = !menuShowing;
-    // });
   }
 
   update() {

@@ -28,12 +28,14 @@ export default class Preload extends Phaser.Scene {
     this.load.image("attributions", "lib/attributions_button.png");
     this.load.image("global", "lib/global.png");
     this.load.image("global_off", "lib/global_off.png");
+    this.load.image("enter", "lib/enter_button.png");
     this.load.html("form", "form.html");
   }
 
   create() {
     this.scale.displaySize.setAspectRatio(16 / 9);
     this.scale.refresh();
+    this.cameras.main.setBackgroundColor("#000082");
     this.add.text(
       20,
       20,
@@ -51,9 +53,9 @@ Alternatively, please refresh the page.`,
         fill: "#FFFFFF",
       }
     );
-    // const bgm = this.sound.add("bgm", { loop: true, volume: 0.1 });
-    // bgm.play();
+    const bgm = this.sound.add("bgm", { loop: true, volume: 0.1 });
+    bgm.play();
 
-    this.scene.start("p2pModeChoosingScene");
+    this.scene.launch("mainScreenScene");
   }
 }

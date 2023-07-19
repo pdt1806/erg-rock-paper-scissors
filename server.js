@@ -13,9 +13,12 @@ var rooms = {};
 
 var privateRooms = {};
 
-function hasEnoughPlayers(roomId) {
-  const room = rooms[roomId];
-  return room && room.length == 2;
+function hasEnoughPlayers(roomId, status) {
+  if (status) {
+    return rooms[roomId].length === 2;
+  } else {
+    return privateRooms[roomId].length === 2;
+  }
 }
 
 function askForPrivateRoom(roomId) {
@@ -26,7 +29,8 @@ io.on("connection", (socket) => {
   console.log("A user connected.");
 
   socket.on("askForPrivateRoom", (roomId) => {
-    socket.emit("answerForPrivateRoom", askForPrivateRoom(roomId));
+    const value = [roomId, askForPrivateRoom(roomId)];
+    socket.emit("answerForPrivateRoom", value);
   });
 
   socket.on("joinRoom", (roomId, status) => {
@@ -52,7 +56,7 @@ io.on("connection", (socket) => {
     }
     console.log(rooms);
     console.log(privateRooms);
-    if (hasEnoughPlayers(roomId)) {
+    if (hasEnoughPlayers(roomId, status)) {
       io.to(roomId).emit("gameStart");
     }
   });

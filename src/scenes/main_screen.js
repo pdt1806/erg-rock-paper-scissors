@@ -28,7 +28,8 @@ export default class MainScreen extends Phaser.Scene {
           this.playButton.setScale(0.1);
         }, 100);
         setTimeout(() => {
-          this.scene.start("ingameScene");
+          this.scene.launch("ingameScene");
+          this.scene.stop("mainScreenScene");
         }, 150);
       });
 
@@ -42,7 +43,8 @@ export default class MainScreen extends Phaser.Scene {
           this.twoPlayersButton.setScale(0.1);
         }, 100);
         setTimeout(() => {
-          this.scene.start("p2pModeChoosingScene");
+          this.scene.launch("p2pModeChoosingScene");
+          this.scene.stop("mainScreenScene");
         }, 150);
       });
 
@@ -70,7 +72,8 @@ export default class MainScreen extends Phaser.Scene {
           this.attributionsButton.setScale(0.1);
         }, 100);
         setTimeout(async () => {
-          this.scene.start("attributionsScene");
+          this.scene.launch("attributionsScene");
+          this.scene.stop("mainScreenScene");
         }, 150);
       });
 

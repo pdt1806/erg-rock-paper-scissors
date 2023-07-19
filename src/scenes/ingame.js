@@ -262,7 +262,8 @@ export default class ingame extends Phaser.Scene {
           this.homebutton.setScale(0.1);
         }, 100);
         setTimeout(() => {
-          this.scene.switch("mainScreenScene");
+          this.scene.launch("mainScreenScene");
+          this.scene.stop("ingameScene");
           menuShowing = !menuShowing;
         }, 150);
       });

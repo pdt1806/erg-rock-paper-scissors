@@ -4,7 +4,10 @@ var attributionsText = [
   "Music Note icon from IconsPlace",
   "Home icon from Flaticon",
   "Reload icon from Wikipedia",
-  "Attribution icon from Flaticon",
+  "Attribution icon from Wikipedia",
+  "Global icon from Flaticon",
+  "Locked icon from Flaticon",
+  "Right arrow icon from Freepik",
   "Background Music from Pekora Ch. 兎田ぺこら (COVER Corporation)",
 ];
 
@@ -14,7 +17,10 @@ var attributionsURL = [
   "https://iconsplace.com/white-icons/note-icon-18/",
   "https://www.flaticon.com/free-icon/home_25694",
   "https://commons.wikimedia.org/wiki/File:Reload_icon_with_two_arrows.svg",
-  "https://www.flaticon.com/free-icon/attribution_104660",
+  "https://commons.wikimedia.org/wiki/File:Cc-by_new.svg",
+  "https://www.flaticon.com/free-icon/global_1383676",
+  "https://www.flaticon.com/free-icon/locked-padlock_61457",
+  "https://www.freepik.com/icon/right-arrow_59209",
   "https://www.youtube.com/@usadapekora",
 ];
 
@@ -29,7 +35,7 @@ export default class Attributions extends Phaser.Scene {
       .setOrigin(0.5, 0.5)
       .setScale(0.5);
 
-    this.title = this.add.image(800, 200, "title").setScale(0.2);
+    this.title = this.add.image(800, 150, "title").setScale(0.15);
 
     this.version = this.add
       .text(1580, 870, `Version ${version}`, {
@@ -39,7 +45,7 @@ export default class Attributions extends Phaser.Scene {
       .setOrigin(1, 0.5);
 
     this.attributionsTitle = this.add
-      .text(800, 400, "Attributions", {
+      .text(800, 300, "Attributions", {
         font: "30px Trebuchet MS",
         fill: "#FFFFFF",
       })
@@ -47,7 +53,7 @@ export default class Attributions extends Phaser.Scene {
 
     for (var i = 0; i < attributionsText.length; i++) {
       this["attributionsTexts" + i] = this.add
-        .text(800, 410 + 40 * (i + 1), attributionsText[i], {
+        .text(800, 310 + 40 * (i + 1), attributionsText[i], {
           font: "25px Trebuchet MS",
           fill: "#FFFFFF",
         })
@@ -73,7 +79,8 @@ export default class Attributions extends Phaser.Scene {
           this.homebutton.setScale(0.1);
         }, 100);
         setTimeout(() => {
-          this.scene.switch("mainScreenScene");
+          this.scene.launch("mainScreenScene");
+          this.scene.stop("attributionsScene");
         }, 150);
       });
 

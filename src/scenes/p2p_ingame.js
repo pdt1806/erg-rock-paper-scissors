@@ -196,9 +196,13 @@ export default class P2Pingame extends Phaser.Scene {
         window.socket.emit("joinRoom", roomId, window.publicP2P);
         roomJoined = true;
       });
-    } else {
+    } else if (!window.joinById) {
       roomId = generateRandomId(8);
       window.socket.emit("joinRoom", roomId, window.publicP2P);
+      roomJoined = true;
+    } else {
+      window.socket.emit("joinRoom", window.roomId, window.publicP2P);
+      roomId = window.roomId;
       roomJoined = true;
     }
 
@@ -232,7 +236,7 @@ export default class P2Pingame extends Phaser.Scene {
 
     this.idtext = this.add
       .text(1580, 870, `ID: ${roomId}`, {
-        font: "20px Trebuchet MS",
+        font: "25px Trebuchet MS",
         fill: "#FFFFFF",
       })
       .setOrigin(1, 0.5)
@@ -392,9 +396,12 @@ export default class P2Pingame extends Phaser.Scene {
           reloadGame();
           menuShowing = false;
           playerLeft = true;
+          window.publicP2P = true;
+          window.joinById = false;
+          window.roomId = "";
           this.playerindicator.setVisible(true);
           this.opponentindicator.setVisible(true);
-          this.scene.switch("mainScreenScene");
+          this.scene.launch("p2pModeChoosingScene");
           this.scene.stop("p2pingameScene");
         }, 150);
       });
