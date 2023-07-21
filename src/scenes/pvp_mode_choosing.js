@@ -1,4 +1,4 @@
-var menuShowing = false;
+var menuShowing = "";
 
 var invalidIdIndicator = false;
 
@@ -47,7 +47,7 @@ export default class PvPModeChoosing extends Phaser.Scene {
       .setOrigin(0.5, 0.5);
 
     this.tenToWin = this.add
-      .image(660, 680, "pvp_mode_button")
+      .image(560, 680, "pvp_mode_button")
       .setScale(0.11, 0.1)
       .setInteractive()
       .on("pointerdown", () => {
@@ -64,14 +64,14 @@ export default class PvPModeChoosing extends Phaser.Scene {
         }, 150);
       });
     this.tenToWin_text = this.add
-      .text(660, 680, "10 to Win", {
+      .text(560, 680, "10 to Win", {
         font: "40px Trebuchet MS",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
 
     this.twentyToWin = this.add
-      .image(940, 680, "pvp_mode_button")
+      .image(800, 680, "pvp_mode_button")
       .setScale(0.11, 0.1)
       .setInteractive()
       .on("pointerdown", () => {
@@ -88,7 +88,29 @@ export default class PvPModeChoosing extends Phaser.Scene {
         }, 150);
       });
     this.twentyToWin_text = this.add
-      .text(940, 680, "20 to Win", {
+      .text(800, 680, "20 to Win", {
+        font: "40px Trebuchet MS",
+        fill: "#FFFFFF",
+      })
+      .setOrigin(0.5, 0.5);
+
+    this.customRound = this.add
+      .image(1040, 680, "pvp_mode_button")
+      .setScale(0.11, 0.1)
+      .setInteractive()
+      .on("pointerdown", () => {
+        this.customRound.setScale(0.115, 0.105);
+        this.customRound_text.setScale(1.05);
+        setTimeout(() => {
+          this.customRound.setScale(0.11, 0.1);
+          this.customRound_text.setScale(1);
+        }, 100);
+        setTimeout(() => {
+          menuShowing = "customround";
+        }, 150);
+      });
+    this.customRound_text = this.add
+      .text(1040, 680, "Custom", {
         font: "40px Trebuchet MS",
         fill: "#FFFFFF",
       })
@@ -106,7 +128,7 @@ export default class PvPModeChoosing extends Phaser.Scene {
           this.joinRoom_text.setScale(1);
         }, 100);
         setTimeout(() => {
-          menuShowing = !menuShowing;
+          menuShowing = "joinroom";
         }, 150);
       });
     this.joinRoom_text = this.add
@@ -166,23 +188,28 @@ export default class PvPModeChoosing extends Phaser.Scene {
       .image(800, 360, "grey_overlay")
       .setInteractive()
       .on("pointerdown", () => {
-        menuShowing = !menuShowing;
+        menuShowing = "";
         invalidIdIndicator = false;
       })
-      .setVisible(menuShowing);
+      .setVisible(menuShowing != "");
 
     this.menubackground = this.add
       .image(800, 450, "menu_bg")
       .setOrigin(0.5, 0.5)
       .setScale(0.2, 0.3)
-      .setVisible(menuShowing)
+      .setVisible(menuShowing != "")
       .setInteractive()
       .on("pointerdown", () => null);
 
     this.idInput = this.add
       .dom(800, 420)
-      .createFromCache("form")
-      .setVisible(menuShowing);
+      .createFromCache("joinroomForm")
+      .setVisible(menuShowing == "joinroom");
+
+    this.numberofroundsInput = this.add
+      .dom(800, 420)
+      .createFromCache("customroundForm")
+      .setVisible(menuShowing == "customround");
 
     this.invalidIdIndicatorText = this.add
       .text(800, 500, "Invalid ID", {
@@ -203,27 +230,40 @@ export default class PvPModeChoosing extends Phaser.Scene {
           this.enterIdButton.setScale(0.08);
         }, 100);
         setTimeout(() => {
-          const id = this.idInput.getChildByName("id").value;
-          if (id.length !== 10) {
-            invalidIdIndicator = true;
+          if (menuShowing == "customround") {
+            window.customRound = parseInt(
+              this.numberofroundsInput.getChildByName("customround").value
+            );
+            window.currentGameMode = "CU";
+            menuShowing = false;
+            this.scene.launch("pvpingameScene");
+            this.scene.stop("pvpModeChoosingScene");
           } else {
-            window.socket.emit("askForPrivateRoom", id);
-            window.socket.on("answerForPrivateRoom", (value) => {
-              if (value[0] == id) {
-                if (value[1]) {
-                  window.publicPvP = false;
-                  window.joinById = true;
-                  window.roomId = value[0];
-                  window.currentGameMode = id.slice(0, 2);
-                  this.scene.launch("pvpingameScene");
-                  this.scene.stop("pvpModeChoosingScene");
-                  menuShowing = false;
-                  invalidIdIndicator = false;
-                } else {
-                  invalidIdIndicator = true;
+            const id = this.idInput.getChildByName("id").value;
+            if (id.length !== 10) {
+              invalidIdIndicator = true;
+            } else {
+              window.socket.emit("askForPrivateRoom", id);
+              window.socket.on("answerForPrivateRoom", (value) => {
+                if (value[0] == id) {
+                  if (value[1]) {
+                    window.publicPvP = false;
+                    window.joinById = true;
+                    window.roomId = value[0];
+                    window.currentGameMode = id.slice(0, 2);
+                    if (id.slice(0, 2) == "CU") {
+                      window.customRound = parseInt(id.slice(2, 4));
+                    }
+                    this.scene.launch("pvpingameScene");
+                    this.scene.stop("pvpModeChoosingScene");
+                    menuShowing = false;
+                    invalidIdIndicator = false;
+                  } else {
+                    invalidIdIndicator = true;
+                  }
                 }
-              }
-            });
+              });
+            }
           }
         }, 150);
       })
@@ -233,9 +273,10 @@ export default class PvPModeChoosing extends Phaser.Scene {
   update() {
     this.musicButton.setTexture(!this.game.sound.mute ? "music" : "music_off");
     this.globalButton.setTexture(window.publicPvP ? "global" : "global_off");
-    this.greyoverlay.setVisible(menuShowing);
-    this.menubackground.setVisible(menuShowing);
-    this.idInput.setVisible(menuShowing);
+    this.greyoverlay.setVisible(menuShowing != "");
+    this.menubackground.setVisible(menuShowing != "");
+    this.idInput.setVisible(menuShowing == "joinroom");
+    this.numberofroundsInput.setVisible(menuShowing == "customround");
     this.invalidIdIndicatorText.setVisible(invalidIdIndicator);
     this.enterIdButton.setVisible(menuShowing);
   }

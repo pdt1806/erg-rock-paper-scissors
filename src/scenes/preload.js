@@ -29,7 +29,8 @@ export default class Preload extends Phaser.Scene {
     this.load.image("global", "lib/global.png");
     this.load.image("global_off", "lib/global_off.png");
     this.load.image("enter", "lib/enter_button.png");
-    this.load.html("form", "form.html");
+    this.load.html("joinroomForm", "joinroomForm.html");
+    this.load.html("customroundForm", "customroundForm.html");
     this.load.image("star", "lib/star.png");
     this.load.image("star_none", "lib/star_none.png");
     this.load.image("you_win", "lib/you_win.png");

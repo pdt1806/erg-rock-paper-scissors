@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #input-form {
+        padding: 15px;
+        background-color: transparent;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      #input-form input {
+        font-size: 20px;
+        width: 400px;
+      }
+      #input-form output {
+        font-size: 30px;
+        color: white;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="input-form">
+      <input
+        type="range"
+        name="customround"
+        id="customround"
+        value="1"
+        max="99"
+        min="1"
+        oninput="this.nextElementSibling.value = `Goal: ${this.value}`"
+      />
+      <output>Goal: 1</output>
+    </div>
+  </body>
+</html>
