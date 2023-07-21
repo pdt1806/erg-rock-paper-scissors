@@ -241,8 +241,8 @@ export default class PvPingame extends Phaser.Scene {
       hideHandButtons(false);
       if (window.currentGameMode !== "CL") {
         for (var i = 0; i < goal; i++) {
-          this["star" + i].setVisible(false);
-          this["star_Opponent" + i].setVisible(false);
+          this["star" + i].setTexture("star_none");
+          this["star_Opponent" + i].setTexture("star_none");
         }
       }
       resultText = "";
@@ -328,16 +328,11 @@ export default class PvPingame extends Phaser.Scene {
 
     if (window.currentGameMode !== "CL") {
       for (var i = 0; i < goal; i++) {
-        this["star_none" + i] = this.add
+        this["star" + i] = this.add
           .image(50 + (i > 9 ? i - 10 : i) * 52, i > 9 ? 110 : 50, "star_none")
           .setOrigin(0.5, 0.5)
           .setScale(0.01);
-        this["star" + i] = this.add
-          .image(50 + (i > 9 ? i - 10 : i) * 52, i > 9 ? 110 : 50, "star")
-          .setOrigin(0.5, 0.5)
-          .setScale(0.01)
-          .setVisible(false);
-        this["star_none_Opponent" + i] = this.add
+        this["star_Opponent" + i] = this.add
           .image(
             1550 - (i > 9 ? i - 10 : i) * 52,
             i > 9 ? 110 : 50,
@@ -345,11 +340,6 @@ export default class PvPingame extends Phaser.Scene {
           )
           .setOrigin(0.5, 0.5)
           .setScale(0.01);
-        this["star_Opponent" + i] = this.add
-          .image(1550 - (i > 9 ? i - 10 : i) * 52, i > 9 ? 110 : 50, "star")
-          .setOrigin(0.5, 0.5)
-          .setScale(0.01)
-          .setVisible(false);
       }
     }
 
@@ -511,10 +501,10 @@ export default class PvPingame extends Phaser.Scene {
     if (updatingScore && window.currentGameMode !== "CL") {
       for (var i = 0; i < goal; i++) {
         if (i + 1 <= winCounter) {
-          this["star" + i].setVisible(true);
+          this["star" + i].setTexture("star");
         }
         if (i + 1 <= lossCounter) {
-          this["star_Opponent" + i].setVisible(true);
+          this["star_Opponent" + i].setTexture("star");
         }
       }
 
