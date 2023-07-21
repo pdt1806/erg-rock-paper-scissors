@@ -127,11 +127,11 @@ io.on("connection", (socket) => {
     console.log(privateRooms);
   });
 
-  socket.on("getAvailableRoomsForClassic", () => {
+  socket.on("getAvailableRooms", (gamemode) => {
     const availableRoomId = Object.keys(rooms).find(
-      (roomId) => rooms[roomId].length === 1 && roomId.startsWith("CL")
+      (roomId) => rooms[roomId].length === 1 && roomId.startsWith(gamemode)
     );
-    socket.emit("availableRoomsForClassic", availableRoomId);
+    socket.emit("availableRooms", availableRoomId);
   });
 
   socket.on("getAvailableRoomsForPrivate", () => {

@@ -7,7 +7,7 @@ function generateRandomId(length) {
     result += characters.charAt(randomIndex);
   }
 
-  return "CL" + result;
+  return window.currentGameMode + result;
 }
 
 var roomJoined = false;
@@ -17,6 +17,10 @@ var playerLeft = false;
 var winCounter = 0;
 var drawCounter = 0;
 var lossCounter = 0;
+
+var updatingScore = false;
+
+var goal;
 
 var menuShowing = false;
 
@@ -121,6 +125,11 @@ const waitingForOpponent = () => {
   setTimeout(waitingForOpponent, 1);
 };
 
+const endGame = async () => {
+  hideHandButtons(true);
+  resultText = "Game over!";
+};
+
 const result = async () => {
   myHandValue = handValues[playerChoice];
   opponentHandValue = handValues[opponentChoice];
@@ -138,13 +147,21 @@ const result = async () => {
     lossCounter++;
     resultText = "You lose!";
   }
-  await window.delay(1234);
-  hideHandButtons(false);
-  myHandValue = handValues[0];
-  opponentHandValue = handValues[0];
-  playerChoice = 0;
-  opponentChoice = null;
-  resultText = "";
+  updatingScore = true;
+  if (
+    (lossCounter === goal || winCounter === goal) &&
+    window.currentGameMode !== "CL"
+  ) {
+    endGame();
+  } else {
+    await window.delay(1234);
+    hideHandButtons(false);
+    myHandValue = handValues[0];
+    opponentHandValue = handValues[0];
+    playerChoice = 0;
+    opponentChoice = null;
+    resultText = "";
+  }
 };
 
 const animationAndResult = async () => {
@@ -154,6 +171,7 @@ const animationAndResult = async () => {
 
 const reloadGame = () => {
   opponentLeft = false;
+  updatingScore = false;
   winCounter = 0;
   drawCounter = 0;
   lossCounter = 0;
@@ -184,10 +202,13 @@ export default class PvPingame extends Phaser.Scene {
   }
 
   create() {
+    if (window.currentGameMode !== "CL") {
+      goal = window.currentGameMode === "TE" ? 10 : 20;
+    }
     if (window.publicPvP) {
-      window.socket.emit("getAvailableRoomsForClassic");
+      window.socket.emit("getAvailableRooms", window.currentGameMode);
 
-      window.socket.on("availableRoomsForClassic", (availableRoomId) => {
+      window.socket.on("availableRooms", (availableRoomId) => {
         if (availableRoomId && !roomJoined) {
           roomId = availableRoomId;
         } else if (!roomJoined) {
@@ -218,6 +239,12 @@ export default class PvPingame extends Phaser.Scene {
       hideHandButtons(false);
       reloadGame();
       hideHandButtons(false);
+      if (window.currentGameMode !== "CL") {
+        for (var i = 0; i < goal; i++) {
+          this["star" + i].setVisible(false);
+          this["star_Opponent" + i].setVisible(false);
+        }
+      }
       resultText = "";
     });
 
@@ -259,39 +286,72 @@ export default class PvPingame extends Phaser.Scene {
         font: "60px Trebuchet MS",
         fill: "#FFFFFF",
       })
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5)
+      .setVisible(window.currentGameMode === "CL");
     this.winscore = this.add
       .text(125, 120, `${winCounter}`, {
         font: "80px Trebuchet MS",
         fill: "#FFFFFF",
       })
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5)
+      .setVisible(window.currentGameMode === "CL");
 
     this.drawtext = this.add
       .text(800, 40, "Draws", {
         font: "60px Trebuchet MS",
         fill: "#FFFFFF",
       })
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5)
+      .setVisible(window.currentGameMode === "CL");
     this.drawscore = this.add
       .text(800, 120, `${drawCounter}`, {
         font: "80px Trebuchet MS",
         fill: "#FFFFFF",
       })
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5)
+      .setVisible(window.currentGameMode === "CL");
 
     this.losstext = this.add
       .text(1475, 40, "Losses", {
         font: "60px Trebuchet MS",
         fill: "#FFFFFF",
       })
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5)
+      .setVisible(window.currentGameMode === "CL");
     this.lossscore = this.add
       .text(1475, 120, `${lossCounter}`, {
         font: "80px Trebuchet MS",
         fill: "#FFFFFF",
       })
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5)
+      .setVisible(window.currentGameMode === "CL");
+
+    if (window.currentGameMode !== "CL") {
+      for (var i = 0; i < goal; i++) {
+        this["star_none" + i] = this.add
+          .image(50 + (i > 9 ? i - 10 : i) * 52, i > 9 ? 110 : 50, "star_none")
+          .setOrigin(0.5, 0.5)
+          .setScale(0.01);
+        this["star" + i] = this.add
+          .image(50 + (i > 9 ? i - 10 : i) * 52, i > 9 ? 110 : 50, "star")
+          .setOrigin(0.5, 0.5)
+          .setScale(0.01)
+          .setVisible(false);
+        this["star_none_Opponent" + i] = this.add
+          .image(
+            1550 - (i > 9 ? i - 10 : i) * 52,
+            i > 9 ? 110 : 50,
+            "star_none"
+          )
+          .setOrigin(0.5, 0.5)
+          .setScale(0.01);
+        this["star_Opponent" + i] = this.add
+          .image(1550 - (i > 9 ? i - 10 : i) * 52, i > 9 ? 110 : 50, "star")
+          .setOrigin(0.5, 0.5)
+          .setScale(0.01)
+          .setVisible(false);
+      }
+    }
 
     this.opponentindicator = this.add
       .text(1430, 650, "Opponent", {
@@ -366,6 +426,18 @@ export default class PvPingame extends Phaser.Scene {
       })
       .setOrigin(0.5, 0.5);
 
+    this.youwin = this.add
+      .image(800, 450, "you_win")
+      .setOrigin(0.5, 0.5)
+      .setScale(0.2)
+      .setVisible(false);
+
+    this.youlose = this.add
+      .image(800, 450, "you_lose")
+      .setOrigin(0.5, 0.5)
+      .setScale(0.2)
+      .setVisible(false);
+
     this.greyoverlay = this.add
       .image(800, 360, "grey_overlay")
       .setInteractive()
@@ -399,6 +471,7 @@ export default class PvPingame extends Phaser.Scene {
           window.publicPvP = true;
           window.joinById = false;
           window.roomId = "";
+          window.currentGameMode = "";
           this.playerindicator.setVisible(true);
           this.opponentindicator.setVisible(true);
           this.scene.launch("pvpModeChoosingScene");
@@ -435,6 +508,19 @@ export default class PvPingame extends Phaser.Scene {
       opponentLeftProcedure();
     }
 
+    if (updatingScore && window.currentGameMode !== "CL") {
+      for (var i = 0; i < goal; i++) {
+        if (i + 1 <= winCounter) {
+          this["star" + i].setVisible(true);
+        }
+        if (i + 1 <= lossCounter) {
+          this["star_Opponent" + i].setVisible(true);
+        }
+      }
+
+      updatingScore = false;
+    }
+
     this.myhand.angle = myHandAngle;
     this.myhand.x = myHandX;
     this.myhand.y = myHandY;
@@ -468,5 +554,12 @@ export default class PvPingame extends Phaser.Scene {
     this.homebutton.setVisible(menuShowing);
     this.reloadbutton.setVisible(menuShowing);
     this.musicbutton.setVisible(menuShowing);
+
+    this.youwin.setVisible(
+      winCounter === goal && window.currentGameMode !== "CL"
+    );
+    this.youlose.setVisible(
+      lossCounter === goal && window.currentGameMode !== "CL"
+    );
   }
 }

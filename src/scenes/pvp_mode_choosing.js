@@ -34,6 +34,7 @@ export default class PvPModeChoosing extends Phaser.Scene {
           this.classic_text.setScale(1);
         }, 100);
         setTimeout(() => {
+          window.currentGameMode = "CL";
           this.scene.launch("pvpingameScene");
           this.scene.stop("pvpModeChoosingScene");
         }, 150);
@@ -45,49 +46,53 @@ export default class PvPModeChoosing extends Phaser.Scene {
       })
       .setOrigin(0.5, 0.5);
 
-    // this.tenToWin = this.add
-    //   .image(660, 680, "pvp_mode_button")
-    //   .setScale(0.11, 0.1)
-    //   .setInteractive()
-    //   .on("pointerdown", () => {
-    //     this.tenToWin.setScale(0.115, 0.105);
-    //     this.tenToWin_text.setScale(1.05);
-    //     setTimeout(() => {
-    //       this.tenToWin.setScale(0.11, 0.1);
-    //       this.tenToWin_text.setScale(1);
-    //     }, 100);
-    //     setTimeout(() => {
-    //       this.scene.launch("ingameScene");
-    //     }, 150);
-    //   });
-    // this.tenToWin_text = this.add
-    //   .text(660, 680, "10 to Win", {
-    //     font: "40px Trebuchet MS",
-    //     fill: "#FFFFFF",
-    //   })
-    //   .setOrigin(0.5, 0.5);
+    this.tenToWin = this.add
+      .image(660, 680, "pvp_mode_button")
+      .setScale(0.11, 0.1)
+      .setInteractive()
+      .on("pointerdown", () => {
+        this.tenToWin.setScale(0.115, 0.105);
+        this.tenToWin_text.setScale(1.05);
+        setTimeout(() => {
+          this.tenToWin.setScale(0.11, 0.1);
+          this.tenToWin_text.setScale(1);
+        }, 100);
+        setTimeout(() => {
+          window.currentGameMode = "TE";
+          this.scene.launch("pvpingameScene");
+          this.scene.stop("pvpModeChoosingScene");
+        }, 150);
+      });
+    this.tenToWin_text = this.add
+      .text(660, 680, "10 to Win", {
+        font: "40px Trebuchet MS",
+        fill: "#FFFFFF",
+      })
+      .setOrigin(0.5, 0.5);
 
-    // this.twentyToWin = this.add
-    //   .image(940, 680, "pvp_mode_button")
-    //   .setScale(0.11, 0.1)
-    //   .setInteractive()
-    //   .on("pointerdown", () => {
-    //     this.twentyToWin.setScale(0.115, 0.105);
-    //     this.twentyToWin_text.setScale(1.05);
-    //     setTimeout(() => {
-    //       this.twentyToWin.setScale(0.11, 0.1);
-    //       this.twentyToWin_text.setScale(1);
-    //     }, 100);
-    //     setTimeout(() => {
-    //       this.scene.launch("ingameScene");
-    //     }, 150);
-    //   });
-    // this.twentyToWin_text = this.add
-    //   .text(940, 680, "20 to Win", {
-    //     font: "40px Trebuchet MS",
-    //     fill: "#FFFFFF",
-    //   })
-    //   .setOrigin(0.5, 0.5);
+    this.twentyToWin = this.add
+      .image(940, 680, "pvp_mode_button")
+      .setScale(0.11, 0.1)
+      .setInteractive()
+      .on("pointerdown", () => {
+        this.twentyToWin.setScale(0.115, 0.105);
+        this.twentyToWin_text.setScale(1.05);
+        setTimeout(() => {
+          this.twentyToWin.setScale(0.11, 0.1);
+          this.twentyToWin_text.setScale(1);
+        }, 100);
+        setTimeout(() => {
+          window.currentGameMode = "TW";
+          this.scene.launch("pvpingameScene");
+          this.scene.stop("pvpModeChoosingScene");
+        }, 150);
+      });
+    this.twentyToWin_text = this.add
+      .text(940, 680, "20 to Win", {
+        font: "40px Trebuchet MS",
+        fill: "#FFFFFF",
+      })
+      .setOrigin(0.5, 0.5);
 
     this.joinRoom = this.add
       .image(800, 790, "pvp_mode_button")
@@ -154,13 +159,6 @@ export default class PvPModeChoosing extends Phaser.Scene {
         }, 150);
       });
 
-    this.tba = this.add
-      .text(800, 680, "More modes coming soon!", {
-        font: "40px Trebuchet MS",
-        fill: "#FFFFFF",
-      })
-      .setOrigin(0.5, 0.5);
-
     this.brand_white = this.add.image(130, 860, "erg_brand_white");
     this.brand_white.setScale(0.06);
 
@@ -216,6 +214,7 @@ export default class PvPModeChoosing extends Phaser.Scene {
                   window.publicPvP = false;
                   window.joinById = true;
                   window.roomId = value[0];
+                  window.currentGameMode = id.slice(0, 2);
                   this.scene.launch("pvpingameScene");
                   this.scene.stop("pvpModeChoosingScene");
                   menuShowing = false;
