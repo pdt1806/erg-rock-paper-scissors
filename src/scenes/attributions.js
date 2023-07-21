@@ -8,6 +8,7 @@ var attributionsText = [
   "Global icon from Flaticon",
   "Locked icon from Flaticon",
   "Right arrow icon from Freepik",
+  "Star icon from Flaticon",
   "Background Music from Pekora Ch. 兎田ぺこら (COVER Corporation)",
 ];
 
@@ -21,6 +22,7 @@ var attributionsURL = [
   "https://www.flaticon.com/free-icon/global_1383676",
   "https://www.flaticon.com/free-icon/locked-padlock_61457",
   "https://www.freepik.com/icon/right-arrow_59209",
+  "https://www.flaticon.com/free-icon/star_118669",
   "https://www.youtube.com/@usadapekora",
 ];
 
