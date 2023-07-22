@@ -86,7 +86,16 @@ export default class Attributions extends Phaser.Scene {
         }, 150);
       });
 
-    this.brand_white = this.add.image(130, 860, "erg_brand_white");
-    this.brand_white.setScale(0.06);
+    this.brand_white = this.add
+      .image(130, 860, "erg_brand_white")
+      .setScale(0.06);
+
+    this.github = this.add
+      .image(70, 800, "github")
+      .setScale(0.06)
+      .setInteractive()
+      .on("pointerdown", () => {
+        window.open("https://github.com/pdt1806");
+      });
   }
 }

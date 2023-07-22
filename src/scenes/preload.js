@@ -35,6 +35,7 @@ export default class Preload extends Phaser.Scene {
     this.load.image("star_none", "lib/star_none.png");
     this.load.image("you_win", "lib/you_win.png");
     this.load.image("you_lose", "lib/you_lose.png");
+    this.load.image("github", "lib/github.png");
   }
 
   create() {
