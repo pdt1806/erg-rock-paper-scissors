@@ -4,11 +4,22 @@ export default class Preload extends Phaser.Scene {
   }
 
   preload() {
+    this.scale.displaySize.setAspectRatio(16 / 9);
+    this.scale.refresh();
+    this.load.image("title", "lib/title.png");
+    setInterval(() => {
+      this.title = this.add.image(800, 350, "title").setScale(0.15);
+      this.add
+        .text(800, 550, "Game is loading...", {
+          font: "25px Consolas",
+          fill: "#FFFFFF",
+        })
+        .setOrigin(0.5, 0.5);
+    }, 10);
     this.load.image("erg_brand_white", "lib/ERG-brand-white.png");
     this.load.image("background", "lib/background.png");
     this.load.image("background_pvp", "lib/background_pvp.png");
     this.load.image("background_ingame", "lib/background_ingame.png");
-    this.load.image("title", "lib/title.png");
     this.load.image("rock", "lib/hands/rock.png");
     this.load.image("paper", "lib/hands/paper.png");
     this.load.image("scissors", "lib/hands/scissors.png");
@@ -39,21 +50,18 @@ export default class Preload extends Phaser.Scene {
   }
 
   create() {
-    this.scale.displaySize.setAspectRatio(16 / 9);
-    this.scale.refresh();
     this.cameras.main.setBackgroundColor("#000082");
     this.add.text(
       20,
       20,
       `Egg Recreates Games - Rock Paper Scissors
-Version ${version}
-      
+  Version ${version}
 
-If you are encountering this message, it indicates that the game is currently loading or an error has occurred. 
+  If you are encountering this message, it indicates that the game is currently loading or an error has occurred.
 
-If you have IDM (Internet Download Manager) installed and it prompts you to download any files, kindly disable it \nfrom downloading files from this particular website. 
+  If you have IDM (Internet Download Manager) installed and it prompts you to download any files, kindly disable it \nfrom downloading files from this particular website.
 
-Alternatively, please refresh the page.`,
+  Alternatively, please refresh the page.`,
       {
         font: "25px Consolas",
         fill: "#FFFFFF",
