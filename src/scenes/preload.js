@@ -4,18 +4,14 @@ export default class Preload extends Phaser.Scene {
   }
 
   preload() {
-    this.scale.displaySize.setAspectRatio(16 / 9);
-    this.scale.refresh();
     this.load.image("title", "lib/title.png");
-    setInterval(() => {
-      this.title = this.add.image(800, 350, "title").setScale(0.15);
-      this.add
-        .text(800, 550, "Game is loading...", {
-          font: "25px Consolas",
-          fill: "#FFFFFF",
-        })
-        .setOrigin(0.5, 0.5);
-    }, 10);
+    this.title = this.add.image(800, 350, "title").setScale(0.15);
+    this.add
+      .text(800, 550, "Game is loading...", {
+        font: "25px Consolas",
+        fill: "#FFFFFF",
+      })
+      .setOrigin(0.5, 0.5);
     this.load.image("erg_brand_white", "lib/ERG-brand-white.png");
     this.load.image("background", "lib/background.png");
     this.load.image("background_pvp", "lib/background_pvp.png");
