@@ -3,8 +3,8 @@ export default class Preload extends Phaser.Scene {
     super("preloadScene");
   }
 
-  preload() {
-    this.load.image("title", "lib/title.png");
+  async preload() {
+    await this.load.image("title", "lib/title.png");
     setInterval(() => {
       this.title = this.add.image(800, 350, "title").setScale(0.15);
       this.add
