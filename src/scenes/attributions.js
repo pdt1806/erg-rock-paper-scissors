@@ -41,14 +41,14 @@ export default class Attributions extends Phaser.Scene {
 
     this.version = this.add
       .text(1580, 870, `Version ${version}`, {
-        font: "20px Trebuchet MS",
+        font: "20px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(1, 0.5);
 
     this.attributionsTitle = this.add
       .text(800, 300, "Attributions", {
-        font: "30px Trebuchet MS",
+        font: "30px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
@@ -56,7 +56,7 @@ export default class Attributions extends Phaser.Scene {
     for (var i = 0; i < attributionsText.length; i++) {
       this["attributionsTexts" + i] = this.add
         .text(800, 310 + 40 * (i + 1), attributionsText[i], {
-          font: "25px Trebuchet MS",
+          font: "25px Sarala",
           fill: "#FFFFFF",
         })
         .setOrigin(0.5, 0.5)

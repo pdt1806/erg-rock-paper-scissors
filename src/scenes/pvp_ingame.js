@@ -273,7 +273,7 @@ export default class PvPingame extends Phaser.Scene {
 
     this.idtext = this.add
       .text(1580, 870, `ID: ${roomId}`, {
-        font: "25px Trebuchet MS",
+        font: "25px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(1, 0.5)
@@ -293,7 +293,7 @@ export default class PvPingame extends Phaser.Scene {
 
     this.wintext = this.add
       .text(125, 40, "Wins", {
-        font: "60px Trebuchet MS",
+        font: "60px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5)
@@ -302,7 +302,7 @@ export default class PvPingame extends Phaser.Scene {
       );
     this.winscore = this.add
       .text(125, 120, `${winCounter}`, {
-        font: "80px Trebuchet MS",
+        font: "80px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5)
@@ -312,14 +312,14 @@ export default class PvPingame extends Phaser.Scene {
 
     this.drawtext = this.add
       .text(800, 40, "Draws", {
-        font: "60px Trebuchet MS",
+        font: "60px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5)
       .setVisible(window.currentGameMode === "CL");
     this.drawscore = this.add
       .text(800, 120, `${drawCounter}`, {
-        font: "80px Trebuchet MS",
+        font: "80px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5)
@@ -327,7 +327,7 @@ export default class PvPingame extends Phaser.Scene {
 
     this.losstext = this.add
       .text(1475, 40, "Losses", {
-        font: "60px Trebuchet MS",
+        font: "60px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5)
@@ -336,7 +336,7 @@ export default class PvPingame extends Phaser.Scene {
       );
     this.lossscore = this.add
       .text(1475, 120, `${lossCounter}`, {
-        font: "80px Trebuchet MS",
+        font: "80px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5)
@@ -346,7 +346,7 @@ export default class PvPingame extends Phaser.Scene {
 
     this.goalindicator = this.add
       .text(800, 40, `First to ${goal}`, {
-        font: "40px Trebuchet MS",
+        font: "40px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5)
@@ -371,13 +371,13 @@ export default class PvPingame extends Phaser.Scene {
 
     this.opponentindicator = this.add
       .text(1430, 650, "Opponent", {
-        font: "75px Trebuchet MS",
+        font: "75px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
     this.playerindicator = this.add
       .text(150, 650, "You", {
-        font: "75px Trebuchet MS",
+        font: "75px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
@@ -437,7 +437,7 @@ export default class PvPingame extends Phaser.Scene {
       .text(800, 830, resultText, {
         font: `${
           resultText === "The opponent has left the game!" ? "50" : "60"
-        }px Trebuchet MS`,
+        }px Sarala`,
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
@@ -566,7 +566,7 @@ export default class PvPingame extends Phaser.Scene {
     this.resulttext.setFont(
       `${
         resultText === "The opponent has left the game!" ? "50" : "60"
-      }px Trebuchet MS`
+      }px Sarala`
     );
 
     this.musicbutton.setTexture(!this.game.sound.mute ? "music" : "music_off");

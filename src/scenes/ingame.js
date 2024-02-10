@@ -131,52 +131,52 @@ export default class ingame extends Phaser.Scene {
 
     this.wintext = this.add
       .text(125, 40, "Wins", {
-        font: "60px Trebuchet MS",
+        font: "60px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
     this.winscore = this.add
       .text(125, 120, `${winCounter}`, {
-        font: "80px Trebuchet MS",
+        font: "80px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
 
     this.drawtext = this.add
       .text(800, 40, "Draws", {
-        font: "60px Trebuchet MS",
+        font: "60px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
     this.drawscore = this.add
       .text(800, 120, `${drawCounter}`, {
-        font: "80px Trebuchet MS",
+        font: "80px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
 
     this.losstext = this.add
       .text(1475, 40, "Losses", {
-        font: "60px Trebuchet MS",
+        font: "60px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
     this.lossscore = this.add
       .text(1475, 120, `${lossCounter}`, {
-        font: "80px Trebuchet MS",
+        font: "80px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
 
     this.aiindicator = this.add
       .text(1450, 650, "AI", {
-        font: "75px Trebuchet MS",
+        font: "75px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
     this.playerindicator = this.add
       .text(150, 650, "You", {
-        font: "75px Trebuchet MS",
+        font: "75px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
@@ -231,7 +231,7 @@ export default class ingame extends Phaser.Scene {
 
     this.resulttext = this.add
       .text(800, 830, resultText, {
-        font: "60px Trebuchet MS",
+        font: "60px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);

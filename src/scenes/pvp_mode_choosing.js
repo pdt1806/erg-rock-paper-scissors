@@ -17,7 +17,7 @@ export default class PvPModeChoosing extends Phaser.Scene {
 
     this.version = this.add
       .text(1580, 870, `Version ${version}`, {
-        font: "20px Trebuchet MS",
+        font: "20px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(1, 0.5);
@@ -41,7 +41,7 @@ export default class PvPModeChoosing extends Phaser.Scene {
       });
     this.classic_text = this.add
       .text(800, 570, "Classic", {
-        font: "40px Trebuchet MS",
+        font: "40px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
@@ -65,7 +65,7 @@ export default class PvPModeChoosing extends Phaser.Scene {
       });
     this.tenToWin_text = this.add
       .text(560, 680, "10 to Win", {
-        font: "40px Trebuchet MS",
+        font: "40px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
@@ -89,7 +89,7 @@ export default class PvPModeChoosing extends Phaser.Scene {
       });
     this.twentyToWin_text = this.add
       .text(800, 680, "20 to Win", {
-        font: "40px Trebuchet MS",
+        font: "40px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
@@ -111,7 +111,7 @@ export default class PvPModeChoosing extends Phaser.Scene {
       });
     this.customRound_text = this.add
       .text(1040, 680, "Custom", {
-        font: "40px Trebuchet MS",
+        font: "40px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
@@ -133,7 +133,7 @@ export default class PvPModeChoosing extends Phaser.Scene {
       });
     this.joinRoom_text = this.add
       .text(800, 790, "Join a room", {
-        font: "40px Trebuchet MS",
+        font: "40px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
@@ -222,7 +222,7 @@ export default class PvPModeChoosing extends Phaser.Scene {
 
     this.invalidIdIndicatorText = this.add
       .text(800, 500, "Invalid ID", {
-        font: "40px Trebuchet MS",
+        font: "40px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5)

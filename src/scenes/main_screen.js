@@ -13,7 +13,7 @@ export default class MainScreen extends Phaser.Scene {
 
     this.version = this.add
       .text(1580, 870, `Version ${version}`, {
-        font: "20px Trebuchet MS",
+        font: "20px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(1, 0.5);
