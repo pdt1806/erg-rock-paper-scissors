@@ -41,7 +41,7 @@ export default class PvPModeChoosing extends Phaser.Scene {
       });
     this.classic_text = this.add
       .text(800, 570, "Classic", {
-        font: "40px Sarala",
+        font: "35px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
@@ -65,7 +65,7 @@ export default class PvPModeChoosing extends Phaser.Scene {
       });
     this.tenToWin_text = this.add
       .text(560, 680, "10 to Win", {
-        font: "40px Sarala",
+        font: "35px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
@@ -89,7 +89,7 @@ export default class PvPModeChoosing extends Phaser.Scene {
       });
     this.twentyToWin_text = this.add
       .text(800, 680, "20 to Win", {
-        font: "40px Sarala",
+        font: "35px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
@@ -111,20 +111,20 @@ export default class PvPModeChoosing extends Phaser.Scene {
       });
     this.customRound_text = this.add
       .text(1040, 680, "Custom", {
-        font: "40px Sarala",
+        font: "35px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
 
     this.joinRoom = this.add
       .image(800, 790, "pvp_mode_button")
-      .setScale(0.13, 0.1)
+      .setScale(0.11, 0.1)
       .setInteractive()
       .on("pointerdown", () => {
-        this.joinRoom.setScale(0.135, 0.105);
+        this.joinRoom.setScale(0.115, 0.105);
         this.joinRoom_text.setScale(1.05);
         setTimeout(() => {
-          this.joinRoom.setScale(0.13, 0.1);
+          this.joinRoom.setScale(0.11, 0.1);
           this.joinRoom_text.setScale(1);
         }, 100);
         setTimeout(() => {
@@ -132,8 +132,8 @@ export default class PvPModeChoosing extends Phaser.Scene {
         }, 150);
       });
     this.joinRoom_text = this.add
-      .text(800, 790, "Join a room", {
-        font: "40px Sarala",
+      .text(800, 790, "Join room", {
+        font: "35px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5);
@@ -222,7 +222,7 @@ export default class PvPModeChoosing extends Phaser.Scene {
 
     this.invalidIdIndicatorText = this.add
       .text(800, 500, "Invalid ID", {
-        font: "40px Sarala",
+        font: "35px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 0.5)

@@ -370,7 +370,7 @@ export default class PvPingame extends Phaser.Scene {
     }
 
     this.opponentindicator = this.add
-      .text(1430, 650, "Opponent", {
+      .text(1400, 650, "Opponent", {
         font: "75px Sarala",
         fill: "#FFFFFF",
       })

@@ -2,6 +2,10 @@
 <html>
   <head>
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Sarala:wght@400;700&display=swap");
+      body {
+        font-family: Sarala, sans-serif;
+      }
       #input-form {
         padding: 15px;
         background-color: transparent;
@@ -16,7 +20,65 @@
       #input-form output {
         font-size: 30px;
         color: white;
-        font-weight: bold;
+      }
+      /*********** Baseline, reset styles ***********/
+      input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        background: transparent;
+        cursor: pointer;
+        width: 25rem;
+      }
+
+      /* Removes default focus */
+      input[type="range"]:focus {
+        outline: none;
+      }
+
+      /******** Chrome, Safari, Opera and Edge Chromium styles ********/
+      /* slider track */
+      input[type="range"]::-webkit-slider-runnable-track {
+        background-color: #cccccc;
+        border-radius: 0.5rem;
+        height: 0.5rem;
+      }
+
+      /* slider thumb */
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none; /* Override default look */
+        appearance: none;
+        margin-top: -4px; /* Centers thumb on the track */
+        background-color: #ed7d31;
+        border-radius: 0.5rem;
+        height: 1rem;
+        width: 1rem;
+      }
+
+      input[type="range"]:focus::-webkit-slider-thumb {
+        outline: 3px solid #ed7d31;
+        outline-offset: 0.125rem;
+      }
+
+      /*********** Firefox styles ***********/
+      /* slider track */
+      input[type="range"]::-moz-range-track {
+        background-color: #cccccc;
+        border-radius: 0.5rem;
+        height: 0.5rem;
+      }
+
+      /* slider thumb */
+      input[type="range"]::-moz-range-thumb {
+        background-color: #ed7d31;
+        border: none; /*Removes extra border that FF applies*/
+        border-radius: 0.5rem;
+        height: 1rem;
+        width: 1rem;
+      }
+
+      input[type="range"]:focus::-moz-range-thumb {
+        outline: 3px solid #ed7d31;
+        outline-offset: 0.125rem;
       }
     </style>
   </head>

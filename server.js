@@ -9,6 +9,8 @@ app.get("/", (res) => {
   res.sendFile(__dirname + "/src/index.html");
 });
 
+var userCounter = 0;
+
 var rooms = {};
 
 var privateRooms = {};
@@ -27,6 +29,8 @@ function askForPrivateRoom(roomId) {
 
 io.on("connection", (socket) => {
   console.log("A user connected.");
+  userCounter++;
+  console.log(`Number of users: ${userCounter}`);
 
   socket.on("askForPrivateRoom", (roomId) => {
     const value = [roomId, askForPrivateRoom(roomId)];
@@ -54,8 +58,6 @@ io.on("connection", (socket) => {
         privateRooms[roomId].push([socket.id]);
       }
     }
-    console.log(rooms);
-    console.log(privateRooms);
     if (hasEnoughPlayers(roomId, status)) {
       io.to(roomId).emit("gameStart");
     }
@@ -64,6 +66,8 @@ io.on("connection", (socket) => {
   socket.on("leaveRoom", (roomId, status) => {
     socket.leave(roomId);
     console.log(`User left room: ${roomId}`);
+    userCounter--;
+    console.log(`Number of users: ${userCounter}`);
 
     if (status) {
       if (rooms[roomId].length === 0) {
@@ -88,9 +92,6 @@ io.on("connection", (socket) => {
         }
       }
     }
-
-    console.log(rooms);
-    console.log(privateRooms);
     io.to(roomId).emit("opponentLeft");
   });
 
@@ -101,7 +102,6 @@ io.on("connection", (socket) => {
       } else {
         rooms[roomId][1].push(data);
       }
-      console.log(rooms);
       if (rooms[roomId][0].length === 2 && rooms[roomId][1].length === 2) {
         io.to(roomId).emit("opponentHand", rooms[roomId]);
         rooms[roomId][0].pop();
@@ -113,7 +113,6 @@ io.on("connection", (socket) => {
       } else {
         privateRooms[roomId][1].push(data);
       }
-      console.log(privateRooms);
       if (
         privateRooms[roomId][0].length === 2 &&
         privateRooms[roomId][1].length === 2
@@ -123,8 +122,6 @@ io.on("connection", (socket) => {
         privateRooms[roomId][1].pop();
       }
     }
-    console.log(rooms);
-    console.log(privateRooms);
   });
 
   socket.on("getAvailableRooms", (gamemode, number) => {
@@ -173,8 +170,6 @@ io.on("connection", (socket) => {
         io.to(roomId).emit("opponentLeft");
       }
     }
-    console.log(rooms);
-    console.log(privateRooms);
   });
 });
 

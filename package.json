@@ -1,11 +1,13 @@
 {
   "name": "erg-rock-paper-scissors",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pdt1806/erg-rock-paper-scissors.git"
   },
-  "keywords": [],
+  "scripts": {
+    "dev": "node server.js"
+  },
   "author": "pdt1806",
   "bugs": {
     "url": "https://github.com/pdt1806/erg-rock-paper-scissors/issues"

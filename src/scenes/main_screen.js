@@ -34,19 +34,27 @@ export default class MainScreen extends Phaser.Scene {
       });
 
     this.twoPlayersButton = this.add
-      .image(800, 700, "pvp_button")
+      .image(800, 700, "pvp_mode_button")
       .setScale(0.1)
       .setInteractive()
       .on("pointerdown", () => {
         this.twoPlayersButton.setScale(0.105);
+        this.twoPlayersButton_text.setScale(1.05);
         setTimeout(() => {
           this.twoPlayersButton.setScale(0.1);
+          this.twoPlayersButton_text.setScale(1);
         }, 100);
         setTimeout(() => {
           this.scene.launch("pvpModeChoosingScene");
           this.scene.stop("mainScreenScene");
         }, 150);
       });
+    this.twoPlayersButton_text = this.add
+      .text(800, 700, "2 Players", {
+        font: "35px Sarala",
+        fill: "#FFFFFF",
+      })
+      .setOrigin(0.5, 0.5);
 
     this.musicButton = this.add
       .image(600, 570, "music")
