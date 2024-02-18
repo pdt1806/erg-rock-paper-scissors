@@ -22,7 +22,6 @@ export default class Preload extends Phaser.Scene {
     this.load.image("paper", "lib/hands/paper.png");
     this.load.image("scissors", "lib/hands/scissors.png");
     this.load.image("play_button", "lib/play_button.png");
-    this.load.image("pvp_button", "lib/pvp_button.png");
     this.load.image("pvp_mode_button", "lib/pvp_mode_button.png");
     this.load.image("menu_button", "lib/menu_button.png");
     this.load.image("hands_menu", "lib/hands/hands_menu.png");

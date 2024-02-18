@@ -1,12 +1,16 @@
 const express = require("express");
+const device = require("express-device");
 const app = express();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 
 app.use(express.static("src"));
+app.use(device.capture());
 
-app.get("/", (res) => {
-  res.sendFile(__dirname + "/src/index.html");
+app.get("/", (req, res) => {
+  if (["phone", "tablet"].includes(req.device.type))
+    res.sendFile(__dirname + "/src/unavailable.html");
+  else res.sendFile(__dirname + "/src/game.html");
 });
 
 var userCounter = 0;
@@ -66,8 +70,6 @@ io.on("connection", (socket) => {
   socket.on("leaveRoom", (roomId, status) => {
     socket.leave(roomId);
     console.log(`User left room: ${roomId}`);
-    userCounter--;
-    console.log(`Number of users: ${userCounter}`);
 
     if (status) {
       if (rooms[roomId].length === 0) {
@@ -148,6 +150,8 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log("A user disconnected.");
+    userCounter--;
+    console.log(`Number of users: ${userCounter}`);
     for (const roomId in rooms) {
       rooms[roomId] = rooms[roomId].filter(
         (playerId) => playerId[0] !== socket.id

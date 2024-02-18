@@ -1,6 +1,6 @@
 {
   "name": "erg-rock-paper-scissors",
-  "version": "1.4.6",
+  "version": "1.4.7",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pdt1806/erg-rock-paper-scissors.git"
@@ -16,6 +16,7 @@
   "description": "Enjoy playing Rock Paper Scissors - a fun and exciting hand game - on your device.",
   "dependencies": {
     "express": "^4.18.2",
+    "express-device": "^0.4.2",
     "socket.io": "^4.7.1"
   }
 }

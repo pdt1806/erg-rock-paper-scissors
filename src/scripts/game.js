@@ -1,9 +1,9 @@
-import Attributions from "./scenes/attributions.js";
-import ingame from "./scenes/ingame.js";
-import MainScreen from "./scenes/main_screen.js";
-import Preload from "./scenes/preload.js";
-import PvPingame from "./scenes/pvp_ingame.js";
-import PvPModeChoosing from "./scenes/pvp_mode_choosing.js";
+import Attributions from "../scenes/attributions.js";
+import ingame from "../scenes/ingame.js";
+import MainScreen from "../scenes/main_screen.js";
+import Preload from "../scenes/preload.js";
+import PvPingame from "../scenes/pvp_ingame.js";
+import PvPModeChoosing from "../scenes/pvp_mode_choosing.js";
 
 var config = {
   scale: {

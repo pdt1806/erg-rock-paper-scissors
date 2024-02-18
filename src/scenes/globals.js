@@ -1,4 +1,4 @@
-window.version = "1.4.6";
+window.version = "1.4.7";
 window.publicPvP = true;
 window.socket = io();
 window.delay = (ms) => new Promise((res) => setTimeout(res, ms));
