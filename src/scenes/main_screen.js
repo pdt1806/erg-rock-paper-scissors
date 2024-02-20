@@ -86,11 +86,11 @@ export default class MainScreen extends Phaser.Scene {
       });
 
     this.brand_white = this.add
-      .image(130, 860, "erg_brand_white")
-      .setScale(0.06);
+      .image(146, 855, "erg_brand_white")
+      .setScale(0.1);
 
     this.github = this.add
-      .image(70, 800, "github")
+      .image(70, 790, "github")
       .setScale(0.06)
       .setInteractive()
       .on("pointerdown", () => {
