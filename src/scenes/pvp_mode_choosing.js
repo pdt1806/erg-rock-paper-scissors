@@ -255,7 +255,7 @@ export default class PvPModeChoosing extends Phaser.Scene {
               window.socket.emit("askForPrivateRoom", id);
               window.socket.on("answerForPrivateRoom", (value) => {
                 if (value[0] == id) {
-                  if (value[1]) {
+                  if (value[1].length < 2) {
                     window.publicPvP = false;
                     window.joinById = true;
                     window.roomId = value[0];
@@ -268,6 +268,9 @@ export default class PvPModeChoosing extends Phaser.Scene {
                     menuShowing = false;
                     invalidIdIndicator = false;
                   } else {
+                    value[1].length == 2
+                      ? this.invalidIdIndicatorText.setText("Room is full")
+                      : this.invalidIdIndicatorText.setText("Invalid ID");
                     invalidIdIndicator = true;
                   }
                 }

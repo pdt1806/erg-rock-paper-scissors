@@ -271,13 +271,30 @@ export default class PvPingame extends Phaser.Scene {
       .setOrigin(0.5, 0.5)
       .setScale(0.5);
 
+    this.copyIdReminder = this.add
+      .text(1580, 835, "Copy by clicking on the ID", {
+        font: "20px Sarala",
+        fill: "#FFFFFF",
+      })
+      .setOrigin(1, 0.5)
+      .setVisible(!window.publicPvP && !window.joinById);
+
     this.idtext = this.add
       .text(1580, 870, `ID: ${roomId}`, {
         font: "25px Sarala",
         fill: "#FFFFFF",
       })
       .setOrigin(1, 0.5)
-      .setVisible(!window.publicPvP);
+      .setVisible(!window.publicPvP)
+      .setInteractive()
+      .on("pointerdown", () => {
+        this.copyIdReminder.setVisible(true);
+        navigator.clipboard.writeText(roomId);
+        this.copyIdReminder.setText("ID copied!");
+        setTimeout(() => {
+          this.copyIdReminder.setVisible(false);
+        }, 2000);
+      });
 
     this.menuButton = this.add
       .image(50, 850, "menu_button")

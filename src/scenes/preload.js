@@ -8,7 +8,7 @@ export default class Preload extends Phaser.Scene {
     setInterval(() => {
       this.title = this.add.image(800, 350, "title").setScale(0.15);
       this.add
-        .text(800, 550, "Game is loading...", {
+        .text(800, 550, "ERG Rock Paper Scissors is loading...", {
           font: "25px Consolas",
           fill: "#FFFFFF",
         })
