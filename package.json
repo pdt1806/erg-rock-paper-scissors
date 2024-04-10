@@ -15,8 +15,8 @@
   "homepage": "https://github.com/pdt1806/erg-rock-paper-scissors#readme",
   "description": "Enjoy playing Rock Paper Scissors - a fun and exciting hand game - on your device.",
   "dependencies": {
-    "express": "^4.18.2",
+    "express": "^4.19.2",
     "express-device": "^0.4.2",
-    "socket.io": "^4.7.1"
+    "socket.io": "^4.7.5"
   }
 }
